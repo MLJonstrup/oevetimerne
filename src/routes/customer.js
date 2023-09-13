@@ -8,8 +8,19 @@ customerRoutes.get("/", (req, res) => {
 });
 
 customerRoutes.post("/", (req, res) => {
-    res.post(customers);
+    const newCustomer = req.body
+    customers.push(newCustomers);
+    res.status(201).send(newCustomer)
   }
 )
+
+customerRoutes.delete("/id", (req, res) => {
+  const un = req.params.username
+  const index = customers.findIndex(
+    customer => customer.un === un
+    )
+  customers.splice(index, 1)
+  res.status(200).send(customers)
+})
 
 module.exports = customerRoutes;
