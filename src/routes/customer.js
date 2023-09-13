@@ -22,5 +22,3 @@ customerRoutes.delete("/id", (req, res) => {
   customers.splice(index, 1)
   res.status(200).send(customers)
 })
-
-module.exports = customerRoutes;
