@@ -11,7 +11,7 @@ app.use(express.json());
 app.use("/customer", customerRoute);
 
 app.get("/", (req, res) => {
-  res.send("Hello World");
+  res.send("Hi babe, I'm a server. I'm working! From Michael <3");
 });
 
 app.listen(3000, () => {
