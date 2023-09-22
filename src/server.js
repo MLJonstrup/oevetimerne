@@ -10,8 +10,8 @@ app.use(express.json());
 
 app.use("/customer", customerRoute);
 
-app.get("/", (req, res) => {
-  res.send("Hi babe, I'm a server. I'm working! From Michael <3");
+app.get('/', (req, res) => {
+  res.sendFile('../client/pages/home.html');
 });
 
 app.listen(3000, () => {
