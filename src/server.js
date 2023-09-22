@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, '../client/public')));
 
 app.get('/', (req, res) => {
-  res.redirect('client/home.html');
+  res.sendFile(path.resolve(__dirname, "../client/pages/home.html"));
 });
 
 app.listen(3000, () => {
