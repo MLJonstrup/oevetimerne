@@ -5,15 +5,17 @@ const path = require("path");
 
 const app = express();
 
-const customerRoute = require("./routes/customer");
+//const customerRoute = require("./routes/customer");
 
 app.use(cors());
 app.use(express.json());
 
 //app.use("/customer", customerRoute);
 
+app.use(express.static(path.join(__dirname, '../client/public')));
+
 app.get('/', (req, res) => {
-  res.sendFile(path.resolve(__dirname, "../client/pages/home.html"));
+  res.redirect('/home.html');
 });
 
 app.listen(3000, () => {
