@@ -11,7 +11,7 @@ app.use(express.json());
 //app.use("/customer", customerRoute);
 
 app.get('/', (req, res) => {
-  res.sendFile('../client/pages/home.html');
+  res.sendFile('oevetimerne/src/client/pages/home.html');
 });
 
 app.listen(3000, () => {
