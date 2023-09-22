@@ -8,7 +8,7 @@ const customerRoute = require("./routes/customer");
 app.use(cors());
 app.use(express.json());
 
-app.use("/customer", customerRoute);
+//app.use("/customer", customerRoute);
 
 app.get('/', (req, res) => {
   res.sendFile('../client/pages/home.html');
