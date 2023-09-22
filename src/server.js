@@ -12,7 +12,7 @@ app.use(express.json());
 
 //app.use("/customer", customerRoute);
 
-app.use(express.static(path.join(__dirname, '../client/public')));
+app.use(express.static(path.join(__dirname, '../client')));
 
 app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, "../client/pages/home.html"));
