@@ -1,22 +1,18 @@
-let responseDom = document.getElementById("response");
+function login() {
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
 
-function getUsers() {
+  const user = {
+    username,
+    password,
+  };
+
   axios
-    .get("http://localhost:3000/customer")
+    .post("http://localhost:3000/customer/login", user)
     .then(function (response) {
-      // handle success
-      console.log(response.data);
-      responseDOM.innerHTML = "All users available in console";
+      location.href = "/chat";
     })
     .catch(function (error) {
-      // handle error
       console.log(error);
-    })
-    .finally(function () {
-      // always executed
     });
 }
-
-function saveUser() {}
-
-function saveImage() {}
