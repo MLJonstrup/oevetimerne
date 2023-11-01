@@ -8,7 +8,7 @@ function login() {
   };
 
   axios
-    .post("http://161.35.86.140/customer/login", user)
+    .post("/customer/login", user)
     .then(function (response) {
       location.href = "http://161.35.86.140/chat";
     })
