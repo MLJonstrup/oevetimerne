@@ -47,7 +47,7 @@ socket.on("chat message", (msg) => {
 
 function seChat() {
   axios
-    .get("http://localhost:3000/store/chat")
+    .get("http://161.35.86.140/store/chat")
     .then(function (response) {
       console.log(response);
       document.cookie = response.data[0];
