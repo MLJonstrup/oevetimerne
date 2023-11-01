@@ -73,7 +73,7 @@ customerRoutes.post("/login", (req, res) => {
       .cookie("userAuth", username, {
         maxAge: 3600000,
       })
-      .redirect("/chat")
+      .redirect("http://161.35.86.140/chat")
       .send({ message: "Du er blevet logget ind" })
       .status(200);
   } else {
