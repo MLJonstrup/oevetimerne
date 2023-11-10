@@ -1,24 +1,23 @@
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
-
 const app = express();
 const customerRoute = require("./routes/customer");
 const storeRoutes = require("./routes/store");
-
-const http = require("http").Server(app);
-const io = require("socket.io")(http);
-
+const http = require("http");
+const io = require("socket.io");
 const chatLog = require("./db/chat.js");
 
-// Middlewares
+// Ports and setup for multiple servers + load balancing
+const ports = [3000, 3001, 3002, 3003];
+let nextPortIndex = 0; // Variable to track the next available port
 
+// Middlewares
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "../client")));
 
 // Send client files from server
-
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/pages/home.html"));
 });
@@ -31,39 +30,35 @@ app.get("/store", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/pages/store.html"));
 });
 
-// app.get("/chatlog", (req, res) => {
-//   res.send(chatLog);
-// });
-
 // API
-
 app.use("/customer", customerRoute);
 app.use("/store", storeRoutes);
 
-// Start server
-
-app.listen(3000, () => {
-  console.log("Server open on port 3000");
-});
+// Start all server instances
+const servers = [];
+for (const port of ports) {
+  const server = http.createServer(app);
+  server.listen(port, () => {
+    console.log(`Server open on port ${port}`);
+    servers.push(server); // Add the server to the list of active servers
+  });
+}
 
 // Socket IO
+const socketServers = [];
+for (const server of servers) {
+  const socketServer = io(server);
+  socketServers.push(socketServer); // Add the socket server to the list of active socket servers
+}
 
-io.on("connection", (socket) => {
-  socket.on("chat message", (msg) => {
-    io.emit("chat message", msg);
-    chatLog.push(msg);
-    console.log(chatLog);
-  });
-  socket.on("user joined", (username) => {
-    console.log(username + " joined the chat");
-    io.emit("chat message", username + " joined the chat");
-  });
-  socket.on("hola", (besked) => {
-    console.log(besked);
-    io.emit("hola", "besked tilbage til klienten..");
-  });
-});
+// Dynamic load balancing using round-robin algorithm
+let currentPortIndex = 0;
+socketServers.forEach((socketServer) => {
+  socketServer.on("connection", (socket) => {
+    const assignedPort = ports[currentPortIndex];
+    socketServer.emit("connected", { port: assignedPort });
 
-http.listen(3000, "localhost", () => {
-  console.log(`Socket.IO server running at http://161.35.86.140/`);
+    // Update the next port index for future connections
+    currentPortIndex = (currentPortIndex + 1) % ports.length;
+  });
 });

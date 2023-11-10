@@ -1,0 +1,18 @@
+[
+    {
+      "firstname": "Hans",
+      "lastname": "Hansen",
+      "username": "hans",
+      "email": "hanshansen@gmail.com",
+      "password": "hansemanse",
+      "verified": true
+    },
+    {
+      "firstname": "Jens",
+      "lastname": "Jensen",
+      "username": "jens",
+      "email": "jensjensen@gmail.com",
+      "password": "hansemanse",
+      "verified": false
+    }
+  ]
