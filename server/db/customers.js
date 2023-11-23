@@ -4,6 +4,38 @@ const sqlite3 = require('sqlite3').verbose();
 //const update = require('../updateUser.js'); 
 //const remove = require('../deleteUser.js'); Please only one user at a time, only send userID. 
 //const userId = require('../userId.js'); From client side script, send userID from cookie.
+
+// Function to read a single user from the database and return it as an object
+function getUser(userId) {
+  const db = new sqlite3.Database('database.db');
+
+  const query = `SELECT * FROM users WHERE userUD = ?`;
+
+  let userData = {};
+
+  db.get(query, userId, (err, row) => {
+    if (err) {
+      console.error(err.message);
+      return;
+    }
+
+    userData = {
+      userUD: row.userUD,
+      username: row.username,
+      firstname: row.firstname,
+      lastname: row.lastname,
+      email: row.email,
+      phone: row.phone,
+      password: row.password,
+      verified: row.verified,
+    };
+
+    db.close();
+  });
+
+  return userData;
+}
+
 // Function to read the entire database and return it as an array
 function getAllUsers() {
   const db = new sqlite3.Database('database.db');
@@ -51,7 +83,7 @@ function getAllUsers() {
 function createNewUser() {
   const db = new sqlite3.Database('database.db');
 
-  const insertStatement = `INSERT INTO users (userUD, username, firstname, lastname, email, phone, password, verified) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+  const insertStatement = `INSERT INTO users (id, username, firstname, lastname, email, phone, password, verified) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
   const newUserData = create;
 
   db.run(insertStatement, newUserData, (err) => {

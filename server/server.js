@@ -6,7 +6,6 @@ const customerRoute = require("./routes/customer");
 const storeRoutes = require("./routes/store");
 const http = require("http");
 const io = require("socket.io");
-const chatLog = require("./db/chat.js");
 
 // Ports and setup for multiple servers + load balancing
 const ports = [3000, 3001, 3002, 3003];
