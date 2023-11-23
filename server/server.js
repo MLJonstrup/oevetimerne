@@ -7,7 +7,7 @@ const storeRoutes = require("./routes/store");
 const http = require("http");
 const io = require("socket.io");
 
-// Ports and setup for multiple servers + load balancing
+// Ports and setup for round robin load balancing
 const ports = [3000, 3001, 3002, 3003];
 let nextPortIndex = 0; // Variable to track the next available port
 
