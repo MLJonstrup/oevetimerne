@@ -7,7 +7,7 @@ const sqlite3 = require('sqlite3').verbose();
 
 // Function to read a single user from the database and return it as an object
 function getUser(userId) {
-  const db = new sqlite3.Database('database.db');
+  const db = new sqlite3.Database('../../database.db');
 
   const query = `SELECT * FROM users WHERE userUD = ?`;
 
@@ -38,7 +38,7 @@ function getUser(userId) {
 
 // Function to read the entire database and return it as an array
 function getAllUsers() {
-  const db = new sqlite3.Database('database.db');
+  const db = new sqlite3.Database('../../database.db');
 
   const query = 'SELECT * FROM users';
 
@@ -81,7 +81,7 @@ function getAllUsers() {
 
 // Function to create a new user based on a constant from another file
 function createNewUser() {
-  const db = new sqlite3.Database('database.db');
+  const db = new sqlite3.Database('../../database.db');
 
   const insertStatement = `INSERT INTO users (id, username, firstname, lastname, email, phone, password, verified) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
   const newUserData = create;
@@ -128,7 +128,7 @@ function updateUserInfo(userId, updatedData) {
 
 // Function to delete a user from the database
 function deleteUser(userId) {
-  const db = new sqlite3.Database('database.db');
+  const db = new sqlite3.Database('../../database.db');
 
   const deleteStatement = `DELETE FROM users WHERE userUD = ?`;
 
