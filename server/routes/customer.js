@@ -4,7 +4,7 @@ const customerRoutes = express.Router();
 const cookieParser = require("cookie-parser");
 customerRoutes.use(cookieParser());
 
-const customers = require("../db/customers");
+const customers = require("../db/customer");
 
 // CRUD endpoints (fra sidst)
 
