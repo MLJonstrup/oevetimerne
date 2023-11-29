@@ -26,5 +26,6 @@ app.get("/", (req, res) => {
 // API
 app.use("/customer", customerRoute);
 app.use("/post", postRoute);
+
 //app.use("/user", userRoute);
 //app.use("/comment", commentsRoute);

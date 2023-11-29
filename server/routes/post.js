@@ -90,7 +90,6 @@ router.post('/updatePost', async (req, res) => {
     );
 });
 
-
 router.post('/deletePost', async (req, res) => {
     const {postId, userId} = req.body;  
     //const {userId} = req.cookies.userId; FOR LATER WHEN USER COOKIE IS IMPLEMENTED
@@ -101,7 +100,7 @@ router.post('/deletePost', async (req, res) => {
     WHERE id = ? AND postAuthor = ?;
   `;
   //running the sqlite3 query
-  db.run(query, [postId.postId, userId.userId], function (err) {
+  db.run(query, [postId, userId], function (err) {
     if (err) {
       console.error(err.message);
       res.status(500).json({ error: "Post deletion failed. Make sure you're the author of the post." });
@@ -115,4 +114,24 @@ router.post('/deletePost', async (req, res) => {
   });
 });
 
-module.exports = router; // Export the router object
+router.get('/userPosts/:userId', (req, res) => {
+    const userId = req.params.userId;
+    // Query to fetch user posts
+    const query = `
+        SELECT * FROM posts
+        WHERE postAuthor = ?;
+    `;
+
+    // Run the query
+    db.all(query, [userId], (err, rows) => {
+        if (err) {
+            console.error(err.message);
+            res.status(500).json({ error: 'Error fetching user posts' });
+        } else {
+            console.log(`User posts fetched successfully.`);
+            res.status(200).json(rows);
+        }
+    });
+});
+
+module.exports = router; 

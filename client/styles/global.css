@@ -3,6 +3,12 @@ body {
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
+.img {
+  width: 100px;
+  height: 100px;
+  background-size: contain;
+}
+
 ul {
   list-style-type: none;
   margin: 0;

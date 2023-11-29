@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <!-- Cloudinary .js script for public use-->
+        <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript" ></script></script>
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -37,17 +39,14 @@
                 <label for="productId">Product ID:</label>
                 <input type="number" id="productId" name="productId" value="11">
                 <br>
-                <label for="postAuthor">Author ID:</label>
-                <input type="number" id="postAuthor" name="postAuthor" value="11">
-                <br>
                 <label for="content">Content:</label>
                 <textarea id="content" name="content">This is the content of the new post.</textarea>
                 <br>
                 <label for="stars">Stars:</label>
                 <input type="number" id="stars" name="stars" value="4">
                 <br>
-                <label for="imgUrl">Image URL:</label>
-                <input type="text" id="imgUrl" name="imgUrl" value="https://i0.wp.com/www.gaddiscompany.com/wp-content/uploads/2016/05/missing-image-placeholder-1024x575.jpg?resize=736%2C414&ssl=1">
+                <button type="button" id="upload_widget">Upload Image</button>
+                <img id="uploadedimage" src=""></img>                 
                 <br>
                 <input type="submit" value="Submit">
             </form>
