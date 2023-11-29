@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="../styles/global.css" />
+        <title>Log ind</title>
+    </head>
+    <body>
+        <ul>
+            <li><img src="../img/joeLogo.svg" alt="Logo" /></li>
+            <li><a href="/" class="active">Home</a></li>
+            <li><a href="/newPost">Juice Chat</a></li>
+            <li><a href="/chat">Juice Chat</a></li>
+            <li><a href="/store">Store</a></li>
+            <li style="float: right">
+                <a href="https://www.joejuice.com/stores?storeType=true&market=dk"
+                    >Locations</a
+                >
+            </li>
+            <li style="float: right">
+                <a href="https://www.joejuice.com/culture">Culture</a>
+            </li>
+            <li style="float: right">
+                <a
+                    href="https://www.joejuice.com/store/5f871bf1-b0d1-4e2a-ac84-31047281cde9"
+                    >Menu</a
+                >
+            </li>
+        </ul>
+        <div class="center">
+            <form id="createPostForm">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" value="New Post">
+                <br>
+                <label for="productId">Product ID:</label>
+                <input type="number" id="productId" name="productId" value="11">
+                <br>
+                <label for="postAuthor">Author ID:</label>
+                <input type="number" id="postAuthor" name="postAuthor" value="11">
+                <br>
+                <label for="content">Content:</label>
+                <textarea id="content" name="content">This is the content of the new post.</textarea>
+                <br>
+                <label for="stars">Stars:</label>
+                <input type="number" id="stars" name="stars" value="4">
+                <br>
+                <label for="imgUrl">Image URL:</label>
+                <input type="text" id="imgUrl" name="imgUrl" value="https://i0.wp.com/www.gaddiscompany.com/wp-content/uploads/2016/05/missing-image-placeholder-1024x575.jpg?resize=736%2C414&ssl=1">
+                <br>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+    </body>
+    <script src="../scripts/postCreate.js"></script>
+</html>
