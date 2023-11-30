@@ -17,13 +17,13 @@ document.addEventListener('DOMContentLoaded', () => {
     imgUrl: "", // This will be updated after image upload
   };
 
+  // Cloudinary widget from: https://cloudinary.com/documentation/javascript_image_and_video_upload
   const cloudName = "dnppfpwxu"; 
 
   let myWidget = cloudinary.createUploadWidget({
     cloudName: cloudName, 
     uploadPreset: 'ml_default'}, (error, result) => { 
       if (!error && result && result.event === "success") { 
-        console.log(result.info.secure_url, result.info.url);
         newPost.imgUrl = result.info.secure_url;
       }
     }
