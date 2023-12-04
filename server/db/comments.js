@@ -35,7 +35,6 @@ function createComment(newComment) {
       } else {
         console.log(`Comment added successfully. Comment ID: ${this.lastID}`);
       }
-
       db.close();
     }
   );
