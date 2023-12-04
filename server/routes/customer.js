@@ -4,9 +4,13 @@ const customerRoutes = express.Router();
 const cookieParser = require("cookie-parser");
 customerRoutes.use(cookieParser());
 
-const customers = require("../db/customers");
+const sqlite3 = require('sqlite3');
+const path = require('path');
 
-// CRUD endpoints (fra sidst)
+const dbPath = path.resolve(__dirname, '../../../database.db');
+const db = new sqlite3.Database(dbPath);
+
+//CRUD endpoints
 
 customerRoutes.get("/", (req, res) => {
   res.send(customers);
@@ -100,7 +104,6 @@ customerRoutes.get("/protected", (req, res) => {
 });
 
 // localStorage eksempel
-
 customerRoutes.post("/localstorage", (req, res) => {
   const { username, password } = req.body;
 
