@@ -21,7 +21,7 @@ router.post('/createComment', async (req, res) => {
         function (err) {
             if (err) {
                 console.error(err.message);
-                res.status(500).json({ error: 'Error creating post' });
+                res.status(500).json({ error: 'Error creating comment' });
             } else {
                 console.log(`comment created successfully.`);
                 res.status(200).json({ message: 'comment created successfully!'});

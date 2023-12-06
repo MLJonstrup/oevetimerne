@@ -9,7 +9,7 @@ const postRoute = require("./routes/post.js");
 const http = require("http");
 const io = require("socket.io");
 
-app.listen(3001, () => {
+app.listen(3000, () => {
   console.log('Server listening on port 3000');
 });
 
