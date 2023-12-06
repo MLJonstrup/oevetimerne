@@ -82,6 +82,10 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             if (response.ok) {
                 console.log('Post updated successfully!');
+                setTimeout(() => {
+                  window.location.href = 'http://161.35.86.140/post'; 
+                }, 3000);
+                alert('Post updated successfully! You will be automatically redirected in a few seconds.');
             } 
         } catch (error) {
             console.error('An error occurred:', error);

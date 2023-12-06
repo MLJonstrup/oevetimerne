@@ -64,7 +64,6 @@ const userId = 12;
   fetchUserPosts();
 
   function attachDeleteEventListeners() {
-    console.log('Attaching delete event listeners');
     const deleteButtons = document.querySelectorAll('.deleteButton');
 
     deleteButtons.forEach(button => { 

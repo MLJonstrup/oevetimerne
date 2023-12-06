@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
           window.location.href = 'http://161.35.86.140/post'; 
         }, 3000);
-        window.alert('Post created successfully! You will be automatically redirected in a few seconds.');
+        alert('Post created successfully! You will be automatically redirected in a few seconds.');
         console.log('Post created successfully!');
       } else {
         alert('Error creating post. Please try again.');
