@@ -34,16 +34,16 @@
         <div class="center">
             <form id="createPostForm">
                 <label for="title">Title:</label>
-                <input type="text" id="title" name="title" value="New Post">
+                <input type="text" id="title" name="title" placeholder="enter title">
                 <br>
                 <label for="productId">Product ID:</label>
-                <input type="number" id="productId" name="productId" value="11">
+                <input type="number" id="productId" name="productId" placeholder="enter productId">
                 <br>
                 <label for="content">Content:</label>
-                <textarea id="content" name="content">This is the content of the new post.</textarea>
+                <textarea id="content" name="content" placeholder="enter conent for the post here"></textarea>
                 <br>
                 <label for="stars">Stars:</label>
-                <input type="number" id="stars" name="stars" value="4">
+                <input type="range" id="stars" name="stars" min="1" max="5" step="1" placeholder="3">
                 <br>
                 <button type="button" id="upload_widget">Upload Image</button>
                 <img id="uploadedimage" src=""></img>                 

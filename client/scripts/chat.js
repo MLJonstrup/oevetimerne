@@ -1,5 +1,4 @@
-const socket = io();
-
+const socket = io()
 const messages = document.getElementById("messages");
 const input = document.getElementById("input");
 

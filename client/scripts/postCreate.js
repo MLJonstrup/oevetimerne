@@ -9,11 +9,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const upload = document.getElementById("upload_widget")
   const userId = 12; //USE COOKIE LATER
   let newPost = {
-    title: document.getElementById('title').value,
-    productId: parseInt(document.getElementById('productId').value),
-    postAuthor: userId,
-    content: document.getElementById('content').value,
-    stars: parseInt(document.getElementById('stars').value),
+    title: "",
+    productId: "",
+    postAuthor: "",
+    content: "",
+    stars: "",
     imgUrl: "", // This will be updated after image upload
   };
 
@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     uploadPreset: 'ml_default'}, (error, result) => { 
       if (!error && result && result.event === "success") { 
         newPost.imgUrl = result.info.secure_url;
+        document.getElementById('uploadedimage').src = newPost.imgUrl;
       }
     }
   )
@@ -38,6 +39,12 @@ document.addEventListener('DOMContentLoaded', () => {
   createform.addEventListener('submit', async (event) => {
     event.preventDefault();
 
+    newPost.title = document.getElementById('title').value,
+    newPost.productId = parseInt(document.getElementById('productId').value),
+    newPost.postAuthor = userId,
+    newPost.content = document.getElementById('content').value,
+    newPost.stars = parseInt(document.getElementById('stars').value);
+
     try {
       const response = await fetch('/post/createPost', {
         method: 'POST',
@@ -47,11 +54,18 @@ document.addEventListener('DOMContentLoaded', () => {
         body: JSON.stringify(newPost),
       });
       if (response.ok) {
+        setTimeout(() => {
+          window.location.href = 'http://161.35.86.140/post'; 
+        }, 3000);
+        window.alert('Post created successfully! You will be automatically redirected in a few seconds.');
         console.log('Post created successfully!');
       } else {
+        alert('Error creating post. Please try again.');
         console.error('Error creating post:', response.status);
+        return;
       }
     } catch (error) {
+      alert('Error creating post. Please try again.');
       console.error('An error occurred:', error);
     }
   });

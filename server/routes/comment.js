@@ -10,21 +10,21 @@ router.use(cookieParser());
 
 // Create post route
 router.post('/createComment', async (req, res) => { 
-    const { postId, postAuthor, content } = req.body;  
+    const { postId, commentAuthor, content } = req.body;  
     const query = `
-    INSERT INTO comments (postId, postAuthor, content)
+    INSERT INTO comments (postId, commentAuthor, content)
     VALUES (?, ?, ?);
     `;
     db.run(
         query, 
-        [postId, postAuthor, content],
+        [postId, commentAuthor, content],
         function (err) {
             if (err) {
                 console.error(err.message);
-                res.status(500).json({ error: 'Error creating post' });
+                res.status(500).json({ error: 'Error creating comment' });
             } else {
-                console.log(`Post created successfully.`);
-                res.status(200).json({ message: 'Post created successfully!'});
+                console.log(`comment created successfully.`);
+                res.status(200).json({ message: 'comment created successfully!'});
             }
         }
     );
