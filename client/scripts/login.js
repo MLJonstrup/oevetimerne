@@ -1,18 +1,22 @@
 function login() {
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
+  logInInfo = {username , password};
 
-  const user = {
-    username,
-    password,
-  };
-
-  axios
-    .post("/customer/login", user)
-    .then(function (response) {
-      location.href = "/chat";
-    })
-    .catch(function (error) {
-      console.log(error);
+  try {
+    const response = fetch('/post/logIn', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(logInInfo),
     });
-}
+    if (response.ok) {
+      console.log('User logged in successfully!');
+    } else {
+      console.error('Wrong username/password:', response.status);
+    }
+  } catch (error) {
+    console.error('An error occurred:', error);
+  }
+};
