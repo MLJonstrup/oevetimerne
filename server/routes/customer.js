@@ -4,10 +4,13 @@ const customerRoutes = express.Router();
 const cookieParser = require("cookie-parser");
 customerRoutes.use(cookieParser());
 
-const sqlite3 = require('sqlite3');
-const path = require('path');
+const sqlite3 = require("sqlite3");
+const path = require("path");
 
-const dbPath = path.resolve(__dirname, '../../../database.db');
+const dbPath = path.resolve(
+  __dirname,
+  "/Users/kasperkamphrasmussen/Documents/GitHub/JoeForum/server/database.db"
+);
 const db = new sqlite3.Database(dbPath);
 
 //CRUD endpoints

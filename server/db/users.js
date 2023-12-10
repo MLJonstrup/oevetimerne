@@ -1,26 +1,29 @@
-const sqlite3 = require('sqlite3').verbose();
+const sqlite3 = require("sqlite3").verbose();
 
-const dbPath = '../../database.db';
+const dbPath =
+  "/Users/kasperkamphrasmussen/Documents/GitHub/JoeForum/server/database.dbs";
 
 const userId = 15; //need to be the userId written in a cookie gathered from client side
 
-const newUserData = { //also need to gether from client side
-  username: 'newexample',
-  firstname: 'Mike',
-  lastname: 'Johns',
-  phone: '12345678',
-  email: 'mikejohns@example.com',
-  password: 'safepassword',
+const newUserData = {
+  //also need to gether from client side
+  username: "newexample",
+  firstname: "Mike",
+  lastname: "Johns",
+  phone: "12345678",
+  email: "mikejohns@example.com",
+  password: "safepassword",
   //verified:  false //automatically set to false when user is created and won't be able to post/comment till verified done in function createUser
-}
+};
 
-const updatedUserData = { //also need to gether from client side
-  username: 'Peter'
-}
+const updatedUserData = {
+  //also need to gether from client side
+  username: "Peter",
+};
 
-function createUser (newUserData) {
+function createUser(newUserData) {
   // if 'verified' is empty or undefined, set it to false
-  if (newUserData.verified === undefined || newUserData.verified === '') {
+  if (newUserData.verified === undefined || newUserData.verified === "") {
     newUserData.verified = false;
   }
 
@@ -34,17 +37,29 @@ function createUser (newUserData) {
   const db = new sqlite3.Database(dbPath);
 
   //run query
-  db.run(query, [newUserData.username, newUserData.firstname, newUserData.lastname, newUserData.phone, newUserData.email, newUserData.password, newUserData.verified], function (err) {
-    if (err) {
-      console.error(err.message);
-    } else {
-      console.log(`User added successfully. User ID: ${this.lastID}`);
-    }
+  db.run(
+    query,
+    [
+      newUserData.username,
+      newUserData.firstname,
+      newUserData.lastname,
+      newUserData.phone,
+      newUserData.email,
+      newUserData.password,
+      newUserData.verified,
+    ],
+    function (err) {
+      if (err) {
+        console.error(err.message);
+      } else {
+        console.log(`User added successfully. User ID: ${this.lastID}`);
+      }
 
-    //close the database connection
-    db.close();
-  });
-};
+      //close the database connection
+      db.close();
+    }
+  );
+}
 
 function deleteUser(userId) {
   const query = `
@@ -67,7 +82,7 @@ function deleteUser(userId) {
 
 function updateUser(userId, updatedUserData) {
   const fields = Object.keys(updatedUserData);
-  const setStatements = fields.map(field => `${field} = ?`).join(', ');
+  const setStatements = fields.map((field) => `${field} = ?`).join(", ");
 
   const query = `
     UPDATE users
@@ -75,7 +90,7 @@ function updateUser(userId, updatedUserData) {
     WHERE id = ?;
   `;
 
-  const values = fields.map(field => updatedUserData[field]);
+  const values = fields.map((field) => updatedUserData[field]);
   values.push(userId);
 
   const db = new sqlite3.Database(dbPath);
