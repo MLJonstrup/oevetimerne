@@ -3,7 +3,7 @@ const path = require('path');
 const router = express.Router();
 const cookieParser = require('cookie-parser');
 const sqlite3 = require('sqlite3').verbose();
-const dbPath = 'JoeForum/database.db';
+const dbPath = './database.db';
 const db = new sqlite3.Database(dbPath);
 
 router.use(cookieParser());
@@ -24,6 +24,7 @@ router.get('/deletePost', (req, res) => {
 router.get('/updatePost', (req, res) => {
     res.sendFile(path.join(__dirname, "../../client/pages/updatePost.html"));
 });
+
 
 // Create post route
 router.post('/createPost', async (req, res) => { 

@@ -7,8 +7,7 @@ const path = require("path");
 const app = express();
 
 const postRoute = require("./routes/post.js");
-
-// const customerRoute = require("./routes/customer");
+const userRoute = require("./routes/user.js");
 // const storeRoutes = require("./routes/store");
 
 //const http = require("http").Server(app);
@@ -34,22 +33,12 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/pages/home.html"));
 });
 
-app.get("/chat", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/pages/chat.html"));
-});
 
-app.get("/store", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/pages/store.html"));
-});
-
-// app.get("/chatlog", (req, res) => {
-//   res.send(chatLog);
-// });
 
 // API
 
 app.use("/post", postRoute);
-// app.use("/customer", customerRoute);
+app.use("/user", userRoute);
 // app.use("/store", storeRoutes);
 
 // Start server
