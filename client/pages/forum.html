@@ -1,0 +1,65 @@
+this my forum html page:
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../styles/global.css" />
+    <link rel="stylesheet" href="../styles/forum.css" />
+    <title>Joe's forum</title>
+  </head>
+  <body>
+    <ul>
+      <li><img src="../img/joeLogo.svg" alt="Logo" /></li>
+      <li><a href="/">Home</a></li>
+      <li><a href="/chat">Juice chat</a></li>
+      <li><a href="/forum" class="active">Joe's forum</a></li>
+      <li><a href="/store">Store</a></li>
+      <li style="float: right">
+        <a href="https://www.joejuice.com/stores?storeType=true&market=dk"
+          >Locations</a
+        >
+      </li>
+      <li style="float: right">
+        <a href="https://www.joejuice.com/culture">Culture</a>
+      </li>
+      <li style="float: right">
+        <a
+          href="https://www.joejuice.com/store/5f871bf1-b0d1-4e2a-ac84-31047281cde9"
+          >Menu</a
+        >
+      </li>
+    </ul>
+    <div class="content">
+      <div class="topics">
+        <h2>Topics</h2>
+        <div>
+          <ul id="topicsList"></ul>
+          <div class="new-topic">
+            <input type="text" id="topicSubject" placeholder="New topic" />
+            <button onclick="createTopic()">Create</button>
+          </div>
+        </div>
+      </div>
+      <div class="thread">
+        <h2>Thread</h2>
+        <input type="hidden" id="activeTopicId" value="" />
+        <div class="threadDiv">
+          <div class="threadHeader"></div>
+          <div class="threadContent" id="threadContent"></div>
+          <div class="newComment">
+            <input
+              type="text"
+              id="commentInput"
+              placeholder="Write a komment"
+            />
+            <button onclick="addComment()">Post Comment</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="../scripts/forum.js"></script>
+</html>
