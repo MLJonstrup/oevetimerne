@@ -32,29 +32,57 @@
     <div class="center">
       <p id="message"></p>
       <div>
-        <p>Brugernavn</p>
+        <form id="createUserForm">
+        <p>Vælg Brugernavn</p>
         <input
-          id="username"
+          id="newUsername"
           class="input"
           type="text"
           placeholder="Type here"
         />
-        <p>Adgangskode</p>
+        <p>Vælg Adgangskode</p>
         <input
-          id="password"
+          id="newPassword"
           class="input"
           type="password"
           placeholder="Type here"
         />
+        <p>Fornavn</p>
+        <input
+          id="newFirstName"
+          class="input"
+          type="password"
+          placeholder="Type here"
+        />
+        <p>Efternavn</p>
+        <input
+          id="newLastName"
+          class="input"
+          type="password"
+          placeholder="Type here"
+        />
+        <p>Telefon nummer</p>
+        <input
+          id="newPhoneNumber"
+          class="input"
+          type="password"
+          placeholder="Type here"
+        />
+        <p>Email</p>
+        <input
+          id="newEmail"
+          class="input"
+          type="password"
+          placeholder="Type here"
+        />
+    </form>
         <div style="margin-top: 20px">
-          <button onclick="login()">Log ind</button>
+          <button onclick="createUser()">Skab bruger</button>
         </div>
       </div>
     </div>
     <div class="center"></div>
   </body>
 
-  <script src="../scripts/home.js"></script>
-  <script src="../scripts/home.js"></script>
-
+  <script src="../scripts/createUser.js"></script>
 </html>
