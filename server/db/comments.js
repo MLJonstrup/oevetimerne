@@ -1,6 +1,7 @@
 const sqlite3 = require('sqlite3').verbose();
 
-const dbPath = '../../database.db';
+const dbPath = 'C:\\eksamen computer\\JoeForum\\database.db';
+
 
 // Retrieve it from the client side or in cookie
 const userId = 11;
