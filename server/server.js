@@ -7,6 +7,7 @@ const path = require("path");
 const app = express();
 
 const postRoute = require("./routes/post.js");
+const commentRoute = require("./routes/comment.js");
 
 const options = {
   key: fs.readFileSync("privkey.pem"), //HTTPS private key
@@ -32,6 +33,8 @@ app.get("/store", (req, res) => {
 });
 
 app.use("/post", postRoute);
+app.use("/comments", commentRoute);
+
 // app.use("/customer", customerRoute);
 
 // Start server
