@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
           const response = await fetch("/post/deletePost", {
-            method: "POST",
+            method: "DELETE",
             headers: {
               "Content-Type": "application/json",
             },

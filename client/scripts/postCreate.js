@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       if (response.ok) {
         setTimeout(() => {
-          window.location.href = "http://161.35.86.140/post"; //måske https://
+          window.location.href = "http://161.35.86.140/post";
         }, 3000);
         alert(
           "Post created successfully! You will be automatically redirected in a few seconds."

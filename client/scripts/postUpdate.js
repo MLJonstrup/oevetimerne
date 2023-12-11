@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       const response = await fetch("/post/updatePost", {
-        method: "POST",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },

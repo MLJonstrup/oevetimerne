@@ -47,7 +47,7 @@ router.post("/createPost", async (req, res) => {
   );
 });
 
-router.post("/updatePost", async (req, res) => {
+router.put("/updatePost", async (req, res) => {
   const { userId, postId, imgUrl, stars, content, productId, title } = req.body;
 
   // Query to update a post by ID and author
@@ -94,7 +94,7 @@ router.post("/updatePost", async (req, res) => {
   );
 });
 
-router.post("/deletePost", async (req, res) => {
+router.delete("/deletePost", async (req, res) => {
   const { postId, userId } = req.body;
   //const {userId} = req.cookies.userId; FOR LATER WHEN USER COOKIE IS IMPLEMENTED
 
