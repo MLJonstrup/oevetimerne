@@ -7,6 +7,7 @@ const path = require("path");
 const app = express();
 
 const postRoute = require("./routes/post.js");
+const commentRoute = require("./routes/comment.js");
 
 // const customerRoute = require("./routes/customer");
 // const storeRoutes = require("./routes/store");
@@ -49,6 +50,8 @@ app.get("/store", (req, res) => {
 // API
 
 app.use("/post", postRoute);
+app.use("/comments", commentRoute);
+
 // app.use("/customer", customerRoute);
 // app.use("/store", storeRoutes);
 

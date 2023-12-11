@@ -8,6 +8,27 @@ const db = new sqlite3.Database(dbPath);
 
 router.use(cookieParser());
 
+router.get("/post/:postId", (req, res) => {
+  const postId = req.params.postId;
+  // Query to fetch user posts
+  const query = `
+          SELECT * FROM comments
+          WHERE postId = ?;
+      `;
+
+  // Run the query
+  db.all(query, [postId], (err, rows) => {
+    if (err) {
+      console.error(err.message);
+      res.status(500).json({ error: "Error fetching user posts" });
+    } else {
+      console.log(`User comments fetched successfully.`);
+      console.log(rows);
+      res.status(200).json(rows);
+    }
+  });
+});
+
 // Create post route
 router.post("/createComment", async (req, res) => {
   const { postId, commentAuthor, content } = req.body;
@@ -25,3 +46,5 @@ router.post("/createComment", async (req, res) => {
     }
   });
 });
+
+module.exports = router;
