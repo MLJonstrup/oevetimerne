@@ -10,7 +10,7 @@ const db = new sqlite3.Database(dbPath);
 router.post('/createUser', async (req, res) => { 
     const { userID, username, firstname, lastname, phone, email , password , verified } = req.body;  
     const query = `
-    INSERT INTO posts (userID, username, firstname, lastname, phone, email , password , verified)
+    INSERT INTO users (userID, username, firstname, lastname, phone, email , password , verified)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?);
     `;
     db.run(

@@ -1,7 +1,7 @@
 function login() {
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
-  logInInfo = {username , password};
+  loginInfo = {username , password};
 
   try {
     const response = fetch('/post/logIn', {
@@ -9,7 +9,7 @@ function login() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(logInInfo),
+      body: JSON.stringify(loginInfo),
     });
     if (response.ok) {
       console.log('User logged in successfully!');
