@@ -1,9 +1,15 @@
 const express = require("express");
 const path = require("path");
 const router = express.Router();
+<<<<<<< HEAD
 const cookieParser = require("cookie-parser");
 const sqlite3 = require("sqlite3").verbose();
 const dbPath = "./database.db";
+=======
+const cookieParser = require('cookie-parser');
+const sqlite3 = require('sqlite3').verbose();
+const dbPath = 'C:\\eksamen computer\\JoeForum\\database.db';
+>>>>>>> main
 const db = new sqlite3.Database(dbPath);
 
 router.use(cookieParser());

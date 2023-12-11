@@ -99,7 +99,7 @@ const http = require("http");
 const io = require("socket.io");
 
 app.listen(3000, () => {
-  console.log("Server listening on port 3000");
+  console.log('Server listening on port 3000');
 });
 
 // Middlewares
