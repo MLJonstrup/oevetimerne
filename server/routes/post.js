@@ -143,6 +143,8 @@ router.get("/userPosts/:userId", (req, res) => {
 });
 
 router.get("/posts", (req, res) => {
+  console.log("Received request for /post/posts");
+
   const query = `
     SELECT *
     FROM posts
