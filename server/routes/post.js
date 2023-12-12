@@ -126,8 +126,8 @@ router.get("/userPosts/:userId", (req, res) => {
   const userId = req.params.userId;
   // Query to fetch user posts
   const query = `
-        SELECT * FROM posts
-        WHERE postAuthor = ?;
+      SELECT * FROM posts
+      WHERE postAuthor = ?;
     `;
 
   // Run the query
@@ -141,5 +141,25 @@ router.get("/userPosts/:userId", (req, res) => {
     }
   });
 });
+
+router.get("/posts", (req, res) => {
+  const query = `
+    SELECT *
+    FROM posts
+    ORDER BY postDate DESC
+    LIMIT 20;
+  `;
+  // Run the query
+  db.all(query, (err, rows) => {
+    if (err) {
+      console.error(err.message);
+      res.status(500).json({ error: "Error fetching user posts" });
+    } else {
+      console.log(`Last 20 posts fetched successfully.`);
+      res.status(200).json(rows);
+    }
+  });
+});
+
 
 module.exports = router;

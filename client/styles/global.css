@@ -195,3 +195,51 @@ input {
 #thread {
   padding: 10px;
 }
+
+#topics {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.post {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 20px;
+
+}
+
+.post div {
+  margin-bottom: 10px;
+}
+
+.img {
+  height: 150px;
+  background-size: cover;
+  background-position: center;
+  margin-top: 10px;
+}
+
+#commentText {
+  width: 100%;
+  margin-top: 10px;
+  padding: 5px;
+}
+
+#addCommentBtn {
+  margin-top: 10px;
+  padding: 5px;
+  background-color: #f09bc1;
+  color: white;
+  cursor: pointer;
+  border: none;
+}
+
+.comment {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.comment div {
+  margin-bottom: 5px;
+}

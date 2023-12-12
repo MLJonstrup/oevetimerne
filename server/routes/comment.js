@@ -23,7 +23,6 @@ router.get("/post/:postId", (req, res) => {
       res.status(500).json({ error: "Error fetching user posts" });
     } else {
       console.log(`User comments fetched successfully.`);
-      console.log(rows);
       res.status(200).json(rows);
     }
   });
@@ -31,12 +30,12 @@ router.get("/post/:postId", (req, res) => {
 
 // Create post route
 router.post("/createComment", async (req, res) => {
-  const { postId, commentAuthor, content } = req.body;
+  const { postId, commentsAuthor, commentsContent } = req.body;
   const query = `
-    INSERT INTO comments (postId, commentAuthor, content)
+    INSERT INTO comments (postId, commentsAuthor, commentsContent)
     VALUES (?, ?, ?);
     `;
-  db.run(query, [postId, commentAuthor, content], function (err) {
+  db.run(query, [postId, commentsAuthor, commentsContent], function (err) {
     if (err) {
       console.error(err.message);
       res.status(500).json({ error: "Error creating comment" });
