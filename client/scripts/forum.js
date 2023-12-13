@@ -2,7 +2,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function fetchUserPosts() {
     try {
-      const response = await fetch(`/post/posts`);
+      fetch("http://161.35.86.140/post/posts")
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch(error => console.error("Error fetching data:", error));
         if (response.ok) {
         const posts = await response.json();
         const postsContainer = document.getElementById("topics");
