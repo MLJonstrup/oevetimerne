@@ -21,7 +21,6 @@ document.addEventListener("DOMContentLoaded", () => {
           postDiv.id = `post_${post.id}`;
           postDiv.classList.add("post");
 
-          // Create and append elements for post details
           const titleDiv = document.createElement("div");
           titleDiv.id = "postTitle";
           titleDiv.textContent = post.title;

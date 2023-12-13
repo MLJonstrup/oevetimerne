@@ -1,45 +1,47 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const userId = 12; //vores user id skal komeme fra en cookie
 
   async function fetchUserPosts() {
     try {
       const response = await fetch(`/post/posts`);
-      if (!response.ok)
-        throw new Error(`HTTP error! status: ${response.status}`);
+        if (response.ok) {
+        const posts = await response.json();
+        const postsContainer = document.getElementById("topics");
 
-      const posts = await response.json();
-      const postsContainer = document.getElementById("topics");
+        // Iterate through each post in the array
+        posts.forEach((post) => {
 
-      posts.forEach((post) => {
-        const postDiv = document.createElement("div");
-        postDiv.id = `post_${post.id}`;
-        postDiv.classList.add("post");
+          // Create a div element for each post
+          const postDiv = document.createElement("div");
+          postDiv.id = `post_${post.id}`;
+          postDiv.classList.add("post");
 
-        const titleDiv = document.createElement("div");
-        titleDiv.textContent = post.title;
-        postDiv.appendChild(titleDiv);
+          const titleDiv = document.createElement("div");
+          titleDiv.textContent = post.title;
+          postDiv.appendChild(titleDiv);
 
-        const dateDiv = document.createElement("div");
-        dateDiv.textContent = post.postDate;
-        postDiv.appendChild(dateDiv);
+          const dateDiv = document.createElement("div");
+          dateDiv.textContent = post.postDate;
+          postDiv.appendChild(dateDiv);
 
-        const contentDiv = document.createElement("div");
-        contentDiv.textContent = post.content;
-        postDiv.appendChild(contentDiv);
+          const contentDiv = document.createElement("div");
+          contentDiv.textContent = post.content;
+          postDiv.appendChild(contentDiv);
 
-        const imgDiv = document.createElement("div");
-        imgDiv.classList.add("img");
-        imgDiv.style.backgroundImage = `url(${post.imgUrl})`;
-        postDiv.appendChild(imgDiv);
+          const imgDiv = document.createElement("div");
+          imgDiv.classList.add("img");
+          imgDiv.style.backgroundImage = `url(${post.imgUrl})`;
+          postDiv.appendChild(imgDiv);
 
-        postDiv.addEventListener("click", () =>
-          fetchAndDisplayComments(post.id)
-        );
+          postDiv.addEventListener("click", () =>
+            fetchAndDisplayComments(post.id)
+          );
 
-        postsContainer.appendChild(postDiv);
-      });
+          postsContainer.appendChild(postDiv);
+        });
+      } else {
+        console.error("Failed to fetch user posts:", response.status);
+      }
     } catch (error) {
-      alert("Failed to fetch user posts.");
       console.error("An error occurred:", error);
     }
   }
@@ -136,7 +138,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         threadContainer.appendChild(commentDiv);
     }
-}
-
+  }
   fetchUserPosts();
 });
