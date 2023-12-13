@@ -25,8 +25,8 @@ router.get("/updatePost", (req, res) => {
   res.sendFile(path.join(__dirname, "../../client/pages/updatePost.html"));
 });
 
-// New route to fetch all posts
 router.get("/posts", (req, res) => {
+  console.log('gettting posts for all');
 
   const query = `
     SELECT *
@@ -47,6 +47,7 @@ router.get("/posts", (req, res) => {
 });
 
 router.get("/userPosts/:userId", (req, res) => {
+  console.log('gettting posts for user');
   const userId = req.params.userId;
   // Query to fetch user posts
   const query = `
@@ -66,7 +67,6 @@ router.get("/userPosts/:userId", (req, res) => {
   });
 });
 
-// Create post route
 router.post("/createPost", async (req, res) => {
   const { title, productId, postAuthor, content, stars, imgUrl } = req.body;
   const query = `
@@ -90,7 +90,6 @@ router.post("/createPost", async (req, res) => {
 
 router.put("/updatePost", async (req, res) => {
   const { userId, postId, imgUrl, stars, content, productId, title } = req.body;
-
   // Query to update a post by ID and author
   const query = `
         UPDATE posts

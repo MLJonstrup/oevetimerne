@@ -3,9 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   async function fetchUserPosts() {
     try {
       fetch("/post/posts")
-      .then(response => response.json())
-      .then(data => console.log(data))
-      .catch(error => console.error("Error fetching data:", error));
+      console.log('fetching posts');
         if (response.ok) {
         const posts = await response.json();
         const postsContainer = document.getElementById("topics");
