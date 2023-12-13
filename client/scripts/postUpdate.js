@@ -39,7 +39,6 @@ document.addEventListener("DOMContentLoaded", () => {
           const imgDiv = document.createElement("div");
           imgDiv.classList.add("img");
           imgDiv.style.backgroundImage = `url(${post.imgUrl})`;
-          console.log(post.imgUrl);
           postDiv.appendChild(imgDiv);
 
           // Append the post div to the container
