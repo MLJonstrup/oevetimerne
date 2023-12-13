@@ -4,6 +4,7 @@ const app = express();
 const postRoute = require("./routes/post.js");
 const commentRoute = require("./routes/comment.js");
 const responseTime = require("response-time");
+const cors = require("cors");
 
 app.listen(3000, () => {
   console.log('Server listening on port 3000');
@@ -13,6 +14,8 @@ app.listen(3000, () => {
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "../client")));
 app.use(responseTime());
+app.use(cors());
+
 
 // Send client files from server
 app.get("/", (req, res) => {
