@@ -49,11 +49,8 @@ document.addEventListener("DOMContentLoaded", () => {
   async function fetchAndDisplayComments(postId) {
     try {
         const response = await fetch(`/comments/post/${postId}`);
-        if (!response.ok)
-            throw new Error(`HTTP error! status: ${response.status}`);
-
+        if (response.ok) {
         const comments = await response.json();
-
         const threadContainer = document.getElementById("thread");
 
         // Clear the existing content in the thread container
@@ -116,6 +113,9 @@ document.addEventListener("DOMContentLoaded", () => {
             // Append comments to the thread container
             appendComment(comment);
         });
+      } else {
+        console.error("Failed to fetch user posts:", response.status);
+      }
     } catch (error) {
         alert("Failed to fetch comments.");
         console.error("An error occurred:", error);
