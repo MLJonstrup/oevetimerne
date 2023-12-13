@@ -27,7 +27,6 @@ router.get("/updatePost", (req, res) => {
 
 // New route to fetch all posts
 router.get("/posts", (req, res) => {
-  console.log("Received request for /posts");
 
   const query = `
     SELECT *
