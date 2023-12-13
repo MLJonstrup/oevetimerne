@@ -40,7 +40,7 @@ router.get("/posts", (req, res) => {
       console.error(err.message);
       res.status(500).json({ error: "Error fetching posts" });
     } else {
-      console.log(`Last 20 posts fetched successfully.`);
+      console.log(`Last 20 posts fetched successfully. /posts`);
       res.status(200).json(rows);
     }
   });
@@ -60,7 +60,7 @@ router.get("/userPosts/:userId", (req, res) => {
       console.error(err.message);
       res.status(500).json({ error: "Error fetching user posts" });
     } else {
-      console.log(`User posts fetched successfully.`);
+      console.log(`User posts fetched successfully. /userPosts/:userId`);
       res.status(200).json(rows);
     }
   });
