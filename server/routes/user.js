@@ -3,7 +3,7 @@ const path = require("path");
 const router = express.Router();
 const cookieParser = require("cookie-parser");
 const sqlite3 = require("sqlite3").verbose();
-const dbPath = "database.db";
+const dbPath = "root/JoeForum/server/database.db";
 const db = new sqlite3.Database(dbPath);
 
 router.post("/createUser", async (req, res) => {
