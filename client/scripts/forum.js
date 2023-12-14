@@ -2,9 +2,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function fetchUserPosts() {
     try {
-      fetch("/post/posts")
-      console.log('fetching posts');
-        if (response.ok) {
+      const response = await fetch("/post/posts"); 
+      console.log('fetching posts'); 
+      if (response.ok) {
         const posts = await response.json();
         const postsContainer = document.getElementById("topics");
 
