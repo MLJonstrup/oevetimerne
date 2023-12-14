@@ -110,19 +110,18 @@ router.post('/createUser', async (req, res) => {
                 });
 
                 const accountSid = 'AC2568c266f5a66782edf7eaa92c6d8ba7';
-                const authToken = '5017cdb2cc29217696b5f5ffc51bb98d';
+                const authToken = '57ae2f8ff3bbb716b1669186bd257edc';
                 const client = require('twilio')(accountSid, authToken);
                 console.log(phone);
                 client.messages
                     .create({
                         body: `Hello ${username},\n\nThank you for registering on our platform! Your account has been created successfully.`,
                         from: '+14692084452',
-                        to: `Hello ${phone},\n\nThank you for registering on our platform! Your account has been created successfully.`
+                        to: phone
                     })
                     .then(message => console.log(message.sid))
                     .finally(() => {
                       console.log("Message sent")
-                      console.log(to);
                     });
                 
 
