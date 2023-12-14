@@ -7,9 +7,11 @@
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "http": "^0.0.1-security",
+    "nodemailer": "^6.9.7",
     "path": "^0.12.7",
     "socket.io": "^4.7.2",
-    "sqlite3": "^5.1.6"
+    "sqlite3": "^5.1.6",
+    "twilio": "^4.19.3"
   },
   "name": "joeforum",
   "version": "1.0.0",

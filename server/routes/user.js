@@ -5,14 +5,76 @@ const cookieParser = require('cookie-parser');
 const sqlite3 = require('sqlite3').verbose();
 const dbPath = './database.db';
 const db = new sqlite3.Database(dbPath);
+const nodemailer = require("nodemailer");
+
+const transporter = nodemailer.createTransport({
+  service: "Gmail",
+  auth: {
+    user: "joejuicecbs@gmail.com",
+    pass: "vwko ujkw ifla qqnm",
+  },
+});
 
 
-router.get('/createUser', (req, res) => {
+
+
+router.post("/login", (req, res) => {
+    const { username, password } = req.body;
+    
+    db.get('SELECT * FROM users WHERE username = ? AND password = ?', [username, password], (err, row) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send('Internal Server Error');
+      }
+  
+      if (row) {
+        res.cookie('userId', row.id, { httpOnly: true });
+        console.log("Cookie set with userId:", row.id);
+
+        res.status(200).send('Login successful!');
+      } else {
+        console.log("test2");
+        // User not found or incorrect password, send an error response
+        res.status(401).send('Invalid username or password');
+      }
+    });
+  });
+
+  router.get("/details", (req, res) => {
+    const userId = req.cookies.userId;
+  
+    if (!userId) {
+      return res.status(401).send('Unauthorized');
+    }
+  
+    db.get('SELECT * FROM users WHERE id = ?', [userId], (err, row) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send('Internal Server Error');
+      }
+  
+      if (row) {
+        res.status(200).json({
+          userId: row.id,
+          username: row.username,
+          // Add other user details as needed
+        });
+      } else {
+        res.status(404).send('User not found');
+      }
+    });
+  });
+
+
+
+
+  router.get('/createUser', (req, res) => {
     res.sendFile(path.join(__dirname, "../../client/pages/createUser.html"));
 });
 router.get('/deleteUser', (req, res) => {
     res.sendFile(path.join(__dirname, "../../client/pages/deleteUser.html"));
 });
+
 
 router.post('/createUser', async (req, res) => { 
     const { username, firstname, lastname, phone, email , password , verified } = req.body;  
@@ -30,31 +92,44 @@ router.post('/createUser', async (req, res) => {
             } else {
                 console.log(`User created successfully.`);
                 res.status(200).json({ message: 'User created successfully!'});
+
+                const mailOptions = {
+                  from: 'joejuicecbs@gmail.com',
+                  to: email,
+                  subject: 'User Registration Confirmation',
+                  text: `Hello ${username},\n\nThank you for registering on our platform! Your account has been created successfully.`
+                };
+            
+                transporter.sendMail(mailOptions, (error, info) => {
+                  if (error) {
+                    console.error(error);
+                    return res.status(500).send('Error sending confirmation email');
+                  }
+               
+                  console.log('Email sent: ' + info.response);
+                });
+
+                const accountSid = 'AC2568c266f5a66782edf7eaa92c6d8ba7';
+                const authToken = '5017cdb2cc29217696b5f5ffc51bb98d';
+                const client = require('twilio')(accountSid, authToken);
+                console.log(phone);
+                client.messages
+                    .create({
+                        body: `Hello ${username},\n\nThank you for registering on our platform! Your account has been created successfully.`,
+                        from: '+14692084452',
+                        to: `Hello ${phone},\n\nThank you for registering on our platform! Your account has been created successfully.`
+                    })
+                    .then(message => console.log(message.sid))
+                    .finally(() => {
+                      console.log("Message sent")
+                      console.log(to);
+                    });
+                
+
             }
         }
     );
 });
-
-router.post("/login", (req, res) => {
-    const { username, password } = req.body;
-    
-    db.get('SELECT * FROM users WHERE username = ? AND password = ?', [username, password], (err, row) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).send('Internal Server Error');
-      }
-  
-      if (row) {
-        // User found, send a success response
-        res.status(200).send('Login successful!');
-      } else {
-        // User not found or incorrect password, send an error response
-        res.status(401).send('Invalid username or password');
-      }
-    });
-  });
-
-
 
 router.post('/deleteUser', (req, res) => {
     const { username, password } = req.body;

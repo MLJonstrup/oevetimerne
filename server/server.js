@@ -3,8 +3,13 @@ const fs = require("fs"); //det her er til https
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
-
 const app = express();
+const nodemailer = require("nodemailer");
+
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
+
+
 
 const postRoute = require("./routes/post.js");
 const userRoute = require("./routes/user.js");
@@ -26,6 +31,7 @@ const options = {
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "../client")));
+
 
 // Send client files from server
 
