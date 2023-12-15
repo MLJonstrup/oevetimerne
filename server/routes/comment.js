@@ -24,7 +24,7 @@ router.get("/post/:postId", (req, res) => {
       console.error(err.message);
       res.status(500).json({ error: "Error fetching user posts" });
     } else {
-      console.log(`User comments fetched successfully.`);
+      console.log("Resulting Rows:", rows); 
       res.status(200).json(rows);
     }
   });
