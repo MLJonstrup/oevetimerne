@@ -1,4 +1,4 @@
-function login() {
+/* function login() {
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
   logInInfo = { username, password };
@@ -19,4 +19,4 @@ function login() {
   } catch (error) {
     console.error("An error occurred:", error);
   }
-}
+} */

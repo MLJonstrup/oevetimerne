@@ -26,7 +26,6 @@ router.get("/updatePost", (req, res) => {
 });
 
 router.get("/posts", (req, res) => {
-  console.log('gettting posts for all');
 
   const query = `
     SELECT *
@@ -40,14 +39,12 @@ router.get("/posts", (req, res) => {
       console.error(err.message);
       res.status(500).json({ error: "Error fetching posts" });
     } else {
-      console.log(`Last 20 posts fetched successfully. /posts`);
       res.status(200).json(rows);
     }
   });
 });
 
 router.get("/userPosts/:userId", (req, res) => {
-  console.log('gettting posts for user');
   const userId = req.params.userId;
   // Query to fetch user posts
   const query = `
@@ -61,7 +58,6 @@ router.get("/userPosts/:userId", (req, res) => {
       console.error(err.message);
       res.status(500).json({ error: "Error fetching user posts" });
     } else {
-      console.log(`User posts fetched successfully. /userPosts/:userId`);
       res.status(200).json(rows);
     }
   });
@@ -81,7 +77,6 @@ router.post("/createPost", async (req, res) => {
         console.error(err.message);
         res.status(500).json({ error: "Error creating post" });
       } else {
-        console.log(`Post created successfully.`);
         res.status(200).json({ message: "Post created successfully!" });
       }
     }
@@ -127,7 +122,6 @@ router.put("/updatePost", async (req, res) => {
           error: "Post not found or you don't have permission to update it.",
         });
       } else {
-        console.log(`Post updated successfully.`);
         res.status(200).json({ message: "Post updated successfully!" });
       }
     }
@@ -156,7 +150,6 @@ router.delete("/deletePost", async (req, res) => {
         error: "Post not found or you don't have permission to delete it.",
       });
     } else {
-      console.log(`Post deleted successfully.`);
       res.status(200).json({ message: "Post deleted successfully!" });
     }
   });
