@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         comments.forEach((comment) => {
           const commentDiv = document.createElement("div");
-          commentDiv.textContent = `${comment.commentsAuthor}: ${comment.commentsContent}`;
+          commentDiv.textContent = `${comment.username}: ${comment.commentsContent}`;
           commentDiv.classList.add("comment");
           threadContainer.appendChild(commentDiv);
         });
