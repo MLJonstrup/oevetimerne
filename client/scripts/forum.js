@@ -56,16 +56,17 @@ document.addEventListener("DOMContentLoaded", () => {
         // Clear the existing content in the thread container
         threadContainer.innerHTML = "";
 
-        comments.forEach((comment) => {
-          const commentDiv = document.createElement("div");
-          commentDiv.textContent = `${comment.commentsAuthor}: ${comment.commentsContent}`;
-          threadContainer.appendChild(commentDiv);
-        });
-
         // Add the <h2>Thread</h2> element
         const threadHeading = document.createElement("h2");
         threadHeading.textContent = "Thread";
         threadContainer.appendChild(threadHeading);
+
+        comments.forEach((comment) => {
+          const commentDiv = document.createElement("div");
+          commentDiv.textContent = `${comment.commentsAuthor}: ${comment.commentsContent}`;
+          commentDiv.classList.add("comment");
+          threadContainer.appendChild(commentDiv);
+        });
 
         // Create a textarea for entering comments
         const commentText = document.createElement("textarea");
