@@ -12,7 +12,7 @@ router.get("/post/:postId", (req, res) => {
   const postId = req.params.postId;
   // Query to fetch user posts
   const query = `
-    SELECT comments.*, users.username AS commentsAuthor
+    SELECT comments.*, users.username
     FROM comments
     JOIN users ON comments.commentsAuthor = users.id
     WHERE comments.postId = ?;
