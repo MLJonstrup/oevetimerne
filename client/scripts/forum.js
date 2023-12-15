@@ -115,7 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
   fetchUserPosts();
 });
 
-          
+        /*   
 
         // Create a textarea for entering comments
         const commentText = document.createElement("textarea");
@@ -199,6 +199,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         threadContainer.appendChild(commentDiv);
     }
-  }
   fetchUserPosts();
 });
+ */
