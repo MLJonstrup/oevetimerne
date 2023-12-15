@@ -51,6 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const response = await fetch(`/comments/post/${postId}`);
         if (response.ok) {
         const comments = await response.json();
+        console.log(comments);
         const threadContainer = document.getElementById("thread");
         const userId =  12;
         // Clear the existing content in the thread container
