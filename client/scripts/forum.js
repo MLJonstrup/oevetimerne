@@ -57,6 +57,66 @@ document.addEventListener("DOMContentLoaded", () => {
         // Clear the existing content in the thread container
         threadContainer.innerHTML = "";
 
+        // Add the <h2>Thread</h2> element
+        const threadHeading = document.createElement("h2");
+        threadHeading.textContent = "Thread";
+        threadContainer.appendChild(threadHeading);
+
+        // Create a textarea for entering comments
+        const commentText = document.createElement("textarea");
+        commentText.id = "commentText";
+        commentText.placeholder = "Enter your comment";
+        threadContainer.appendChild(commentText);
+
+        // Create a button for adding comments
+        const addCommentBtn = document.createElement("button");
+        addCommentBtn.id = "addCommentBtn";
+        addCommentBtn.textContent = "Add Comment";
+        threadContainer.appendChild(addCommentBtn);
+
+        // Event listener for adding comments
+        addCommentBtn.addEventListener("click", async () => {
+            const commentContent = commentText.value.trim();
+
+            // Check if commentContent is not empty
+            if (commentContent === "") {
+                alert("Please enter a comment.");
+                return;
+            }
+
+            const newComment = {
+                postId: postId,
+                commentsContent: commentContent,
+                commentsAuthor: userId,
+            };
+
+            try {
+                const response = await fetch("/comments/createComment", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(newComment),
+                });
+
+                if (response.ok) {
+                    // Append the new comment to the thread
+                }
+            } catch (error) {
+                console.error("An error occurred:", error);
+            }
+        });
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
+  }
+
+  fetchUserPosts();
+});
+
+          
+
         // Create a textarea for entering comments
         const commentText = document.createElement("textarea");
         commentText.id = "commentText";
