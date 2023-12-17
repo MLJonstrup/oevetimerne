@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (response.ok) {
         console.log("Post updated successfully!");
         setTimeout(() => {
-          window.location.href = "http://161.35.86.140/post";
+          window.location.href = "https://joejuiceforum.social";
         }, 3000);
         alert(
           "Post updated successfully! You will be automatically redirected in a few seconds."
