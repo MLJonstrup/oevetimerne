@@ -6,6 +6,15 @@ const commentRoute = require("./routes/comment.js");
 const responseTime = require("response-time");
 const cors = require("cors");
 
+app.use((req, res, next) => {
+  if (req.header('x-forwarded-proto') !== 'https' && process.env.NODE_ENV === 'production') {
+    res.redirect(`https://${req.header('host')}${req.url}`);
+
+  } else {
+      next();
+  }
+});
+
 app.listen(3000, () => {
   console.log('Server listening on port 3000');
 });
