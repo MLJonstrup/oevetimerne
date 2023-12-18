@@ -63,8 +63,8 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       if (response.ok) {
         setTimeout(() => {
-          window.location.href = "/post";
-        }, 5);
+          window.location.replace = ("/post");
+        }, 0.4);
         alert(
           "Post created successfully! You will be automatically redirected in a few seconds."
         );
