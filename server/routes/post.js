@@ -8,39 +8,32 @@ const db = new sqlite3.Database(dbPath);
 
 router.use(cookieParser());
 
-const routes = [
-  { path: "/", file: "posts.html" },
-  { path: "/createPost", file: "createPost.html" },
-  { path: "/deletePost", file: "deletePost.html" },
-  { path: "/updatePost", file: "updatePost.html" },
-  { path: "/posts", handler: getPosts },
-  { path: "/userPosts/:userId", handler: getUserPosts },
-  { path: "/createPost", method: "post", handler: createPost },
-  { path: "/updatePost", method: "put", handler: updatePost },
-  { path: "/deletePost", method: "delete", handler: deletePost },
-];
-
-routes.forEach((route) => {
-  if (route.handler) {
-    if (route.method) {
-      router[route.method](route.path, route.handler);
-    } else {
-      router.get(route.path, route.handler);
-    }
-  } else {
-    router.get(route.path, (req, res) => {
-      res.sendFile(path.join(__dirname, `../../client/pages/${route.file}`));
-    });
-  }
+// Define route handlers
+router.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "../../client/pages/posts.html"));
 });
 
-function getPosts(req, res) {
+router.get("/createPost", (req, res) => {
+  res.sendFile(path.join(__dirname, "../../client/pages/createPost.html"));
+});
+
+router.get("/deletePost", (req, res) => {
+  res.sendFile(path.join(__dirname, "../../client/pages/deletePost.html"));
+});
+
+router.get("/updatePost", (req, res) => {
+  res.sendFile(path.join(__dirname, "../../client/pages/updatePost.html"));
+});
+
+router.get("/posts", (req, res) => {
+
   const query = `
     SELECT *
     FROM posts
     ORDER BY postDate DESC
     LIMIT 20;
   `;
+  // Run the query
   db.all(query, (err, rows) => {
     if (err) {
       console.error(err.message);
@@ -49,14 +42,17 @@ function getPosts(req, res) {
       res.status(200).json(rows);
     }
   });
-}
+});
 
-function getUserPosts(req, res) {
+router.get("/userPosts/:userId", (req, res) => {
   const userId = req.params.userId;
+  // Query to fetch user posts
   const query = `
     SELECT * FROM posts
     WHERE postAuthor = ?;
   `;
+
+  // Run the query
   db.all(query, [userId], (err, rows) => {
     if (err) {
       console.error(err.message);
@@ -65,14 +61,14 @@ function getUserPosts(req, res) {
       res.status(200).json(rows);
     }
   });
-}
+});
 
-function createPost(req, res) {
+router.post("/createPost", async (req, res) => {
   const { title, productId, postAuthor, content, stars, imgUrl } = req.body;
   const query = `
     INSERT INTO posts (title, productId, postAuthor, content, stars, imgUrl)
     VALUES (?, ?, ?, ?, ?, ?);
-  `;
+    `;
   db.run(
     query,
     [title, productId, postAuthor, content, stars, imgUrl],
@@ -85,21 +81,24 @@ function createPost(req, res) {
       }
     }
   );
-}
+});
 
-function updatePost(req, res) {
+router.put("/updatePost", async (req, res) => {
   const { userId, postId, imgUrl, stars, content, productId, title } = req.body;
+  // Query to update a post by ID and author
   const query = `
-    UPDATE posts
-    SET
-    title = COALESCE(?, title),
-    productId = COALESCE(?, productId),
-    content = COALESCE(?, content),
-    stars = COALESCE(?, stars),
-    imgUrl = COALESCE(?, imgUrl)
-    WHERE
-    id = ? AND postAuthor = ?;
-  `;
+        UPDATE posts
+        SET
+        title = COALESCE(?, title),
+        productId = COALESCE(?, productId),
+        content = COALESCE(?, content),
+        stars = COALESCE(?, stars),
+        imgUrl = COALESCE(?, imgUrl)
+        WHERE
+        id = ? AND postAuthor = ?;
+    `;
+
+  // Run the query
   db.run(
     query,
     [
@@ -127,14 +126,18 @@ function updatePost(req, res) {
       }
     }
   );
-}
+});
 
-function deletePost(req, res) {
+router.delete("/deletePost", async (req, res) => {
   const { postId, userId } = req.body;
+  //const {userId} = req.cookies.userId; FOR LATER WHEN USER COOKIE IS IMPLEMENTED
+
+  //query to run
   const query = `
     DELETE FROM posts
     WHERE id = ? AND postAuthor = ?;
   `;
+  //running the sqlite3 query
   db.run(query, [postId, userId], function (err) {
     if (err) {
       console.error(err.message);
@@ -150,6 +153,7 @@ function deletePost(req, res) {
       res.status(200).json({ message: "Post deleted successfully!" });
     }
   });
-}
+});
 
 module.exports = router;
+ 
