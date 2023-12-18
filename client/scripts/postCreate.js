@@ -63,8 +63,8 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       if (response.ok) {
         setTimeout(() => {
-          window.location.href = "/";
-        }, 3000);
+          window.location.href = "https://www.joejuiceforum.social/post";
+        }, 5);
         alert(
           "Post created successfully! You will be automatically redirected in a few seconds."
         );
