@@ -23,6 +23,11 @@ async function login() {
   }
 };
 
+async function redirect() {
+  console.log("test");
+  window.location.href = "https://joejuiceforum.social/user/createUser";
+}
+
 async function checkCookie() {
   try {
     const response = await fetch('/user/details', {

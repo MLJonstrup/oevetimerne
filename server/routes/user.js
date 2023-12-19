@@ -20,26 +20,34 @@ const transporter = nodemailer.createTransport({
 
 
 router.post("/login", (req, res) => {
-    const { username, password } = req.body;
-    
-    db.get('SELECT * FROM users WHERE username = ? AND password = ?', [username, password], (err, row) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).send('Internal Server Error');
-      }
-  
-      if (row) {
-        res.cookie('userId', row.id, { httpOnly: true });
-        console.log("Cookie set with userId:", row.id);
+  const { username, password } = req.body;
 
-        res.status(200).send('Login successful!');
-      } else {
-        console.log("test2");
-        // User not found or incorrect password, send an error response
-        res.status(401).send('Invalid username or password');
+  // Fetch the user from the database
+  db.get('SELECT * FROM users WHERE username = ?', [username], async (err, row) => {
+      if (err) {
+          console.error(err);
+          return res.status(500).send('Internal Server Error');
       }
-    });
+
+      if (row) {
+          // Compare the submitted password with the hashed password
+          const match = await bcrypt.compare(password, row.password);
+
+          if (match) {
+              // Password matches, proceed with login
+              res.cookie('userId', row.id, { httpOnly: true });
+              console.log("Cookie set with userId:", row.id);
+              res.status(200).send('Login successful!');
+          } else {
+              // Password does not match
+              res.status(401).send('Invalid username or password');
+          }
+      } else {
+          // User not found
+          res.status(401).send('Invalid username or password');
+      }
   });
+});
 
   router.get("/details", (req, res) => {
     const userId = req.cookies.userId;
@@ -82,7 +90,7 @@ router.post('/createUser', async (req, res) => {
 
   try {
       // Hash the password
-      const hashedPassword = await bcrypt.hash(password, saltRounds);
+      //const hashedPassword = await bcrypt.hash(password, saltRounds);
 
       const query = `
       INSERT INTO users (username, firstname, lastname, phone, email, password, verified)
@@ -91,11 +99,12 @@ router.post('/createUser', async (req, res) => {
 
       db.run(
           query, 
-          [username, firstname, lastname, phone, email, hashedPassword, verified], // Use hashedPassword instead of password
+          [username, firstname, lastname, phone, email, password, verified], // Use hashedPassword instead of password
           function (err) {
               if (err) {
                   console.error(err.message);
                   res.status(500).json({ error: 'Error creating user' });
+
               } else {
                   console.log(`User created successfully.`);
                   res.status(200).json({ message: 'User created successfully!'});
