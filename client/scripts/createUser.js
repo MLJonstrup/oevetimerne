@@ -1,7 +1,5 @@
-document.addEventListener('DOMContentLoaded', () => {
-
+document.addEventListener("DOMContentLoaded", () => {
   async function createUser() {
-
     let newUser = {
       username: "",
       firstname: "",
@@ -9,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
       phone: "",
       email: "",
       password: "",
-      verified: false
+      verified: false,
     };
 
     newUser.username = document.getElementById("newUsername").value;
@@ -21,40 +19,31 @@ document.addEventListener('DOMContentLoaded', () => {
     newUser.verified = false;
 
     try {
-      const response = await fetch('/user/createUser', {
-        method: 'POST',
+      const response = await fetch("/user/createUser", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(newUser),
       });
 
       if (response.ok) {
-        console.log('User created successfully!');
+        console.log("profile created")
       }
     } catch (error) {
-      console.error('An error occurred:', error);
+      console.error("An error occurred:", error);
     }
   }
-  document.getElementById("createUserButton").addEventListener("click", createUser);
+  document
+    .getElementById("createUserButton")
+    .addEventListener("click", createUser);
 
   // You can add an event listener here if needed
   // For example, if this is in response to a button click:
   // document.getElementById("createUserButton").addEventListener("click", createUser);
 });
-  
 
-
-
-
-
-
-
-
-
-
-
-    /*const mailOptions = {
+/*const mailOptions = {
       from: 'joejuicecbs@gmail.com',
       to: email,
       subject: 'User Registration Confirmation',
