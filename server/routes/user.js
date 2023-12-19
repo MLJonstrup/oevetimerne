@@ -6,6 +6,8 @@ const sqlite3 = require('sqlite3').verbose();
 const dbPath = './database.db';
 const db = new sqlite3.Database(dbPath);
 const nodemailer = require("nodemailer");
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 const transporter = nodemailer.createTransport({
   service: "Gmail",
@@ -76,57 +78,65 @@ router.get('/deleteUser', (req, res) => {
 
 
 router.post('/createUser', async (req, res) => { 
-    const { username, firstname, lastname, phone, email , password , verified } = req.body;  
-    const query = `
-    INSERT INTO users (username, firstname, lastname, phone, email , password , verified)
-    VALUES (?, ?, ?, ?, ?, ?, ?);
-    `;
-    db.run(
-        query, 
-        [username, firstname, lastname, phone, email , password , verified],
-        function (err) {
-            if (err) {
-                console.error(err.message);
-                res.status(500).json({ error: 'Error creating user' });
-            } else {
-                console.log(`User created successfully.`);
-                res.status(200).json({ message: 'User created successfully!'});
+  const { username, firstname, lastname, phone, email, password, verified } = req.body;
 
-                const mailOptions = {
-                  from: 'joejuicecbs@gmail.com',
-                  to: email,
-                  subject: 'User Registration Confirmation',
-                  text: `Hello ${username},\n\nThank you for registering on our platform! Your account has been created successfully.`
-                };
-            
-                transporter.sendMail(mailOptions, (error, info) => {
-                  if (error) {
-                    console.error(error);
-                    return res.status(500).send('Error sending confirmation email');
-                  }
-               
-                  console.log('Email sent: ' + info.response);
-                });
+  try {
+      // Hash the password
+      const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-                const accountSid = 'AC2568c266f5a66782edf7eaa92c6d8ba7';
-                const authToken = '57ae2f8ff3bbb716b1669186bd257edc';
-                const client = require('twilio')(accountSid, authToken);
-                console.log(phone);
-                client.messages
-                    .create({
-                        body: `Hello ${username},\n\nThank you for registering on our platform! Your account has been created successfully.`,
-                        from: '+14692084452',
-                        to: phone
-                    })
-                    .then(message => console.log(message.sid))
-                    .finally(() => {
-                      console.log("Message sent")
-                    });
-                
+      const query = `
+      INSERT INTO users (username, firstname, lastname, phone, email, password, verified)
+      VALUES (?, ?, ?, ?, ?, ?, ?);
+      `;
 
-            }
-        }
-    );
+      db.run(
+          query, 
+          [username, firstname, lastname, phone, email, hashedPassword, verified], // Use hashedPassword instead of password
+          function (err) {
+              if (err) {
+                  console.error(err.message);
+                  res.status(500).json({ error: 'Error creating user' });
+              } else {
+                  console.log(`User created successfully.`);
+                  res.status(200).json({ message: 'User created successfully!'});
+
+                  const mailOptions = {
+                      from: 'joejuicecbs@gmail.com',
+                      to: email,
+                      subject: 'User Registration Confirmation',
+                      text: `Hello ${username},\n\nThank you for registering on our platform! Your account has been created successfully.`
+                  };
+              
+                  transporter.sendMail(mailOptions, (error, info) => {
+                      if (error) {
+                          console.error(error);
+                          return res.status(500).send('Error sending confirmation email');
+                      }
+                  
+                      console.log('Email sent: ' + info.response);
+                  });
+
+                  const accountSid = 'AC2568c266f5a66782edf7eaa92c6d8ba7';
+                  const authToken = '57ae2f8ff3bbb716b1669186bd257edc';
+                  const client = require('twilio')(accountSid, authToken);
+                  console.log(phone);
+                  client.messages
+                      .create({
+                          body: `Hello ${username},\n\nThank you for registering on our platform! Your account has been created successfully.`,
+                          from: '+14692084452',
+                          to: phone
+                      })
+                      .then(message => console.log(message.sid))
+                      .finally(() => {
+                        console.log("Message sent")
+                      });
+              }
+          }
+      );
+  } catch (err) {
+      console.error(err.message);
+      res.status(500).json({ error: 'Error hashing password' });
+  }
 });
 
 router.post('/deleteUser', (req, res) => {
