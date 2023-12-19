@@ -3,6 +3,7 @@ const path = require("path");
 const app = express();
 const postRoute = require("./routes/post.js");
 const commentRoute = require("./routes/comment.js");
+const userRoute = require("./routes/user.js");
 const responseTime = require("response-time");
 const cors = require("cors");
 
@@ -25,3 +26,4 @@ app.get("/", (req, res) => {
 
 app.use("/post", postRoute);
 app.use("/comments", commentRoute);
+app.use("/user", userRoute);
