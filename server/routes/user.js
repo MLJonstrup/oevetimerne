@@ -86,67 +86,65 @@ router.get('/deleteUser', (req, res) => {
 });
 
 
-router.post('/createUser', async (req, res) => { 
+router.post('/createUser', async (req, res) => {
   const { username, firstname, lastname, phone, email, password, verified } = req.body;
 
   try {
-      // Hash the password
-      const hashedPassword = await bcrypt.hash(password, saltRounds);
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-      const query = `
+    const query = `
       INSERT INTO users (username, firstname, lastname, phone, email, password, verified)
       VALUES (?, ?, ?, ?, ?, ?, ?);
-      `;
+    `;
 
-      db.run(
-          query, 
-          [username, firstname, lastname, phone, email, hashedPassword, verified], // Use hashedPassword instead of password
-          function (err) {
-              if (err) {
-                  console.error(err.message);
-                  res.status(500).json({ error: 'Error creating user' });
-              } else {
-                  console.log(`User created successfully.`);
-                  res.status(200).json({ message: 'User created successfully!'});
+    db.run(
+      query,
+      [username, firstname, lastname, phone, email, hashedPassword, verified], // Use hashedPassword instead of password
+      async function (err) {
+        if (err) {
+          console.error(err.message);
+          return res.status(500).json({ error: 'Error creating user' });
+        } else {
+          console.log(`User created successfully.`);
 
-                  const mailOptions = {
-                      from: 'joejuicecbs@gmail.com',
-                      to: email,
-                      subject: 'User Registration Confirmation',
-                      text: `Hello ${username},\n\nThank you for registering on our platform! Your account has been created successfully.`
-                  };
-              
-                  transporter.sendMail(mailOptions, (error, info) => {
-                      if (error) {
-                          console.error(error);
-                          return res.status(500).send('Error sending confirmation email');
-                      }
-                  
-                      console.log('Email sent: ' + info.response);
-                  });
+          // Sending email and SMS
+          try {
+            const mailOptions = {
+              from: 'joejuicecbs@gmail.com',
+              to: email,
+              subject: 'User Registration Confirmation',
+              text: `Hello ${username},\n\nThank you for registering on our platform! Your account has been created successfully.`
+            };
 
-                  const accountSid = 'AC2568c266f5a66782edf7eaa92c6d8ba7';
-                  const authToken = '57ae2f8ff3bbb716b1669186bd257edc';
-                  const client = require('twilio')(accountSid, authToken);
-                  console.log(phone);
-                  client.messages
-                      .create({
-                          body: `Hello ${username},\n\nThank you for registering on our platform! Your account has been created successfully.`,
-                          from: '+14692084452',
-                          to: phone
-                      })
-                      .then(message => console.log(message.sid))
-                      .finally(() => {
-                        console.log("Message sent")
-                      });
-              }
+            await transporter.sendMail(mailOptions);
+            console.log('Email sent successfully');
+
+            const accountSid = 'AC2568c266f5a66782edf7eaa92c6d8ba7';
+            const authToken = '57ae2f8ff3bbb716b1669186bd257edc';
+            const client = require('twilio')(accountSid, authToken);
+            console.log(phone);
+            await client.messages.create({
+              body: `Hello ${username},\n\nThank you for registering on our platform! Your account has been created successfully.`,
+              from: '+14692084452',
+              to: phone
+            });
+            console.log("SMS sent successfully");
+
+            res.status(200).json({ message: 'User created successfully!' });
+          } catch (sendingError) {
+            console.error(sendingError);
+            res.status(500).json({ error: 'Error sending confirmation email or SMS' });
           }
-      );
+        }
+      }
+    );
   } catch (err) {
-      console.error(err.message);
-      res.status(500).json({ error: 'Error hashing password' });
+    console.error(err.message);
+    res.status(500).json({ error: 'Error hashing password' });
   }
 });
+
 
 router.post('/deleteUser', (req, res) => {
     const { username, password } = req.body;
