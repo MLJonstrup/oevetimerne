@@ -182,4 +182,15 @@ router.post('/deleteUser', (req, res) => {
   });
 
 
+  router.get('/logout', (req, res) => {
+    console.log('Logout route called'); // Add this for debugging
+  
+    // Clear the user session or cookie (if you're using cookies)
+    res.clearCookie('userId'); // Assuming you set a 'userId' cookie during login
+  
+    // Redirect the user to the home page (home.html)
+    res.redirect('/home.html');
+  });
+  
+
   module.exports = router; 
