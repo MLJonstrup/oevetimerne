@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const router = express.Router();
-//const cookieParser = require('cookie-parser');
+const cookieParser = require('cookie-parser');
 const sqlite3 = require('sqlite3').verbose();
 const dbPath = './database.db';
 const db = new sqlite3.Database(dbPath);
@@ -90,7 +90,7 @@ router.post('/createUser', async (req, res) => {
 
   try {
       // Hash the password
-      //const hashedPassword = await bcrypt.hash(password, saltRounds);
+      const hashedPassword = await bcrypt.hash(password, saltRounds);
 
       const query = `
       INSERT INTO users (username, firstname, lastname, phone, email, password, verified)
@@ -99,7 +99,7 @@ router.post('/createUser', async (req, res) => {
 
       db.run(
           query, 
-          [username, firstname, lastname, phone, email, password, verified], // Use hashedPassword instead of password
+          [username, firstname, lastname, phone, email, hashedPassword, verified], // Use hashedPassword instead of password
           function (err) {
               if (err) {
                   console.error(err.message);
