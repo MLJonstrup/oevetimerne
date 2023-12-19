@@ -189,7 +189,7 @@ router.post('/deleteUser', (req, res) => {
     res.clearCookie('userId'); // Assuming you set a 'userId' cookie during login
   
     // Redirect the user to the home page (home.html)
-    res.redirect('/home.html');
+    res.redirect('https://joejuiceforum.social/');
   });
   
 
