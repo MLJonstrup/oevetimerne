@@ -28,13 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       if (response.ok) {
-        setTimeout(() => {
-          window.location.href = "https://joejuiceforum.social";
-        }, 0.2);
-        alert(
-          "Profile created, Welcome! You will be automatically redirected in a few seconds."
-        );
-        console.log("Profile created successfully!");
+        console.log("profile created")
       }
     } catch (error) {
       console.error("An error occurred:", error);
