@@ -66,7 +66,6 @@ router.post("/login", (req, res) => {
         res.status(200).json({
           userId: row.id,
           username: row.username,
-          // Add other user details as needed
         });
       } else {
         res.status(404).send('User not found');
@@ -184,5 +183,16 @@ router.post('/deleteUser', (req, res) => {
     });
   });
 
+
+  router.get('/logout', (req, res) => {
+    console.log('Logout route called'); // Add this for debugging
+  
+    // Clear the user session or cookie (if you're using cookies)
+    res.clearCookie('userId'); // Assuming you set a 'userId' cookie during login
+  
+    // Redirect the user to the home page (home.html)
+    res.redirect('https://joejuiceforum.social/');
+  });
+  
 
   module.exports = router; 

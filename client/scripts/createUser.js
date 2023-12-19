@@ -28,7 +28,8 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       if (response.ok) {
-        console.log("profile created")
+        alert("Bruger er oprettet.");
+        window.location.href = "https://joejuiceforum.social/";
       }
     } catch (error) {
       console.error("An error occurred:", error);

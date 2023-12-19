@@ -24,6 +24,14 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/pages/home.html"));
 });
 
+app.get("/check-login", (req, res) => {
+  if (req.cookies.userId) {
+    res.json({ loggedIn: true });
+  } else {
+    res.json({ loggedIn: false });
+  }
+});
+
 app.use("/post", postRoute);
 app.use("/comments", commentRoute);
 app.use("/user", userRoute);
