@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", async () => {
   const deleteform = document.getElementById("deletePostForm");
-
+  /* 
   try {
     const response = await axios.get("/user/details", {
       withCredentials: true,
@@ -16,7 +16,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       console.error("Error fetching user details:", error.message);
     }
   }
-  console.log(userId);
+  console.log(userId); */
+
+  const userId = 12;
 
   async function fetchUserPosts() {
     try {
