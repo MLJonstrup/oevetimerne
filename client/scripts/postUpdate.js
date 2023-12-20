@@ -1,11 +1,22 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async() => {
   const updateForm = document.getElementById("updatePostForm");
-  const userId = 12;
-  //USER ID FROM COOKIE FOR LATER
-  /*const userId = document.cookie
-    .split('; ')
-    .find(cookie => cookie.startsWith('userId='))
-    .split('=')[1];*/
+
+  try {
+    const response = await axios.get("/user/details", {
+      withCredentials: true,
+    });
+
+    const user = response.data;
+    console.log("User details:", user);
+    var userId = user.userId;
+  } catch (error) {
+    if (error.response && error.response.status === 401) {
+      console.log("User is not authenticated");
+    } else {
+      console.error("Error fetching user details:", error.message);
+    }
+  }
+  console.log(userId);
 
   async function fetchUserPosts() {
     try {

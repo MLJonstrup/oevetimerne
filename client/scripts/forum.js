@@ -1,5 +1,22 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
 
+  try {
+    const response = await axios.get("/user/details", {
+      withCredentials: true,
+    });
+
+    const user = response.data;
+    console.log("User details:", user);
+    var userId = user.userId;
+  } catch (error) {
+    if (error.response && error.response.status === 401) {
+      console.log("User is not authenticated");
+    } else {
+      console.error("Error fetching user details:", error.message);
+    }
+  }
+  console.log(userId);
+  
   async function fetchUserPosts() {
     try {
       const response = await fetch("/post/posts"); 
@@ -53,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const comments = await response.json();
         console.log(comments);
         const threadContainer = document.getElementById("thread");
-        const userId =  12;
+        //const userId =  12;
         // Clear the existing content in the thread container
         threadContainer.innerHTML = "";
 
