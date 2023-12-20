@@ -64,8 +64,7 @@ router.post("/login", (req, res) => {
   
       if (row) {
         res.status(200).json({
-          userId: row.id,
-          username: row.username,
+          userId: row.id
         });
       } else {
         res.status(404).send('User not found');

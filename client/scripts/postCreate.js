@@ -1,13 +1,23 @@
-//USER ID FROM COOKIE FOR LATER
-/*const userId = document.cookie
-.split('; ')
-.find(cookie => cookie.startsWith('userId='))
-.split('=')[1];*/
-
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   const createform = document.getElementById("createPostForm");
   const upload = document.getElementById("upload_widget");
-  const userId = 12; //USE COOKIE LATER
+
+  try {
+    const response = await axios.get('/user/details', { withCredentials: true });
+
+    // Assuming the server responds with user details
+    const user = response.data;
+    console.log('User details:', user);
+    var userId = user.userId;
+  } catch (error) {
+    if (error.response && error.response.status === 401) {
+      console.log('User is not authenticated');
+    } else {
+      console.error('Error fetching user details:', error.message);
+    }
+  }
+  console.log(userId);
+
   let newPost = {
     title: "",
     productId: "",

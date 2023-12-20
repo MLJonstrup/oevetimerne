@@ -24,6 +24,10 @@ async function login() {
   }
 }
 
+function redirect(){
+  window.location.href = '/user/createUser';
+}
+
 async function checkLoginStatusAndUpdateUI() {
   try {
     const response = await fetch('/check-login', { credentials: 'include' });
