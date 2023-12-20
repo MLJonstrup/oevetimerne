@@ -1,15 +1,30 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    const response = await axios.get("/user/details", {
+      withCredentials: true,
+    });
+
+    const user = response.data;
+    console.log("User details:", user);
+    var userId = user.userId;
+  } catch (error) {
+    if (error.response && error.response.status === 401) {
+      console.log("User is not authenticated");
+    } else {
+      console.error("Error fetching user details:", error.message);
+    }
+  }
+  console.log(userId);
 
   async function fetchUserPosts() {
     try {
-      const response = await fetch("/post/posts"); 
+      const response = await fetch("/post/posts");
       if (response.ok) {
         const posts = await response.json();
         const postsContainer = document.getElementById("topics");
 
         // Iterate through each post in the array
         posts.forEach((post) => {
-
           // Create a div element for each post
           const postDiv = document.createElement("div");
           postDiv.id = `post_${post.id}`;
@@ -48,12 +63,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function fetchAndDisplayComments(postId) {
     try {
-        const response = await fetch(`/comments/post/${postId}`);
-        if (response.ok) {
+      const response = await fetch(`/comments/post/${postId}`);
+      if (response.ok) {
         const comments = await response.json();
         console.log(comments);
         const threadContainer = document.getElementById("thread");
-        const userId =  12;
+
+        //const userId = 12;
         // Clear the existing content in the thread container
         threadContainer.innerHTML = "";
 
@@ -83,35 +99,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Event listener for adding comments
         addCommentBtn.addEventListener("click", async () => {
-            const commentContent = commentText.value.trim();
+          const commentContent = commentText.value.trim();
 
-            // Check if commentContent is not empty
-            if (commentContent === "") {
-                alert("Please enter a comment.");
-                return;
+          // Check if commentContent is not empty
+          if (commentContent === "") {
+            alert("Please enter a comment.");
+            return;
+          }
+
+          const newComment = {
+            postId: postId,
+            commentsContent: commentContent,
+            commentsAuthor: userId,
+          };
+
+          try {
+            const response = await fetch("/comments/createComment", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(newComment),
+            });
+
+            if (response.ok) {
+              // Append the new comment to the thread
             }
-
-            const newComment = {
-                postId: postId,
-                commentsContent: commentContent,
-                commentsAuthor: userId,
-            };
-
-            try {
-                const response = await fetch("/comments/createComment", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(newComment),
-                });
-
-                if (response.ok) {
-                    // Append the new comment to the thread
-                }
-            } catch (error) {
-                console.error("An error occurred:", error);
-            }
+          } catch (error) {
+            console.error("An error occurred:", error);
+          }
         });
       }
     } catch (error) {

@@ -1,11 +1,22 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   const updateForm = document.getElementById("updatePostForm");
-  const userId = 12;
-  //USER ID FROM COOKIE FOR LATER
-  /*const userId = document.cookie
-    .split('; ')
-    .find(cookie => cookie.startsWith('userId='))
-    .split('=')[1];*/
+
+  try {
+    const response = await axios.get("/user/details", {
+      withCredentials: true,
+    });
+
+    const user = response.data;
+    console.log("User details:", user);
+    var userId = user.userId;
+  } catch (error) {
+    if (error.response && error.response.status === 401) {
+      console.log("User is not authenticated");
+    } else {
+      console.error("Error fetching user details:", error.message);
+    }
+  }
+  console.log(userId);
 
   async function fetchUserPosts() {
     try {
@@ -14,9 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const posts = await response.json();
         const postsContainer = document.getElementById("postsContainer");
 
-        // Iterate through each post in the array
         posts.forEach((post) => {
-          // Create a div element for each post
           const postDiv = document.createElement("div");
           postDiv.id = `post_${post.id}`;
           postDiv.classList.add("post");
@@ -41,7 +50,6 @@ document.addEventListener("DOMContentLoaded", () => {
           imgDiv.style.backgroundImage = `url(${post.imgUrl})`;
           postDiv.appendChild(imgDiv);
 
-          // Append the post div to the container
           postsContainer.appendChild(postDiv);
         });
       } else {
@@ -57,7 +65,6 @@ document.addEventListener("DOMContentLoaded", () => {
   updateForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
-    // Create a JavaScript object with form data
     const updatePost = {
       title: document.getElementById("updateTitle").value,
       productId: parseInt(document.getElementById("updateProductId").value),
