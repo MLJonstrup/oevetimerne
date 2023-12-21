@@ -3,6 +3,7 @@ Denne fil vil indeholde:
 1. Forklaring på hvordan man kører vores program på localhost
 2. Videogennemgang af programmet (både som link og fil)
 3. Adndet information
+4. api key
 
 1:
 
@@ -32,3 +33,8 @@ Videoen ligger også underbilag i rapporten.
 
 3:
 Dele af css og html filerne af udarbejdet på baggrund af øvelsestimernes tilgang til udsmykning og design af programmet.
+
+4:
+Api Key
+Kan findes i filen user.js linje 137
+twilio key: '57ae2f8ff3bbb716b1669186bd257edc'  
