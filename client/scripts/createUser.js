@@ -1,3 +1,5 @@
+//kode inspiretet fra følgene side: https://developer.mozilla.org/en-US/docs/Learn/Forms/Sending_forms_through_JavaScript
+
 // Venter på at DOM'en er fuldt indlæst
 document.addEventListener("DOMContentLoaded", () => {
   // Asynkron funktion til at oprette en ny bruger

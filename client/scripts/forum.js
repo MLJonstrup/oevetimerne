@@ -1,3 +1,5 @@
+
+//kode under inspiretet fra følgene side: https://www.freecodecamp.org/news/javascript-fetch-api-tutorial-with-js-fetch-post-and-header-examples/ og https://developer.mozilla.org/en-US/docs/Learn/Forms/Sending_forms_through_JavaScript
 // Vent, indtil DOM'en er fuldt indlæst, før koden udføres
 document.addEventListener("DOMContentLoaded", async () => {
   // Forsøg at hente brugeroplysninger med en GET-anmodning

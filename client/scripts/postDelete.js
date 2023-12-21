@@ -1,3 +1,4 @@
+//kode inspiretet fra følgene side: https://www.tabnine.com/code/javascript/functions/deleteUser
 document.addEventListener("DOMContentLoaded", async () => {
   // Hent DOM-elementer
   const deleteform = document.getElementById("deletePostForm");

@@ -1,3 +1,5 @@
+
+//kode inspiretet fra følgene side: https://javascript.plainenglish.io/i-finally-figured-out-try-catch-and-async-await-ac15fa786f23
 // Asynkron funktion for login
 async function login() {
   // Henter brugernavn og kodeord fra inputfelterne

@@ -1,3 +1,4 @@
+//inspiration er fundet ved følgene; https://blog.logrocket.com/crud-rest-api-node-js-express-postgresql/
 // Importerer de nødvendige moduler
 const express = require("express");
 const path = require("path");

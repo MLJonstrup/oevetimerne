@@ -1,3 +1,5 @@
+
+//kode inspiretet fra følgene side: https://developer.mozilla.org/en-US/docs/Learn/Forms/Sending_forms_through_JavaScript
 document.addEventListener("DOMContentLoaded", async () => {
   // Hent elementer fra DOM
   const createform = document.getElementById("createPostForm");

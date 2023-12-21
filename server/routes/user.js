@@ -1,3 +1,5 @@
+//kode inspiretet fra følgene side https://dev.to/m_josh/build-a-jwt-login-and-logout-system-using-expressjs-nodejs-hd2 og 
+//https://blog.logrocket.com/crud-rest-api-node-js-express-postgresql/
 const express = require('express');
 const path = require('path');
 const router = express.Router();
@@ -18,7 +20,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-
+//kode inspiretet fra følgene side https://www.tabnine.com/code/javascript/functions/express/Request/login
 // Login route handler
 router.post("/login", (req, res) => {
   const { username, password } = req.body;

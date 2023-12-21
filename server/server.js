@@ -1,3 +1,5 @@
+//kode inspiretet fra følgene side: https://nodejs.org/en/learn/getting-started/introduction-to-nodejs
+
 const express = require("express");
 const path = require("path");
 const cookieParser = require('cookie-parser'); // Importerer cookie-parser

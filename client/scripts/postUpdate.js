@@ -1,3 +1,5 @@
+//kode inspiretet fra følgene side: https://www.codementor.io/@rahatkhannamappmechanic/how-to-update-a-user-s-status-in-realtime-in-javascript-g04od1y7l
+
 document.addEventListener("DOMContentLoaded", async() => {
   const updateForm = document.getElementById("updatePostForm");
 

@@ -1,3 +1,5 @@
+//kode inspiretet fra følgene side: https://docs.amplify.aws/javascript/build-a-backend/auth/delete-user-account/
+
 // Asynkron funktion til at fjerne en bruger
 async function remove() {
     // Henter brugernavn og kodeord fra inputfelter
