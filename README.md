@@ -12,6 +12,10 @@ Denne fil vil indeholde:
 - Kør serveren med "node server.js"
 - Åben http://localhost:3000 i browseren
 
+OBS! Hver gang der bliver trykket på en knap, hvor man bliver redirected til en anden side, så bliver man sendt til domænet som kører på Digital Ocean.
+Så skal man derfor selv ændre tilbage til localhost.
+Eksempel: Der bliver trykket på logind knappen, så bliver man sendt fra localhost:3000 til https://joejuiceforum.social/post. Herfra skal man så ændre url'et til localhost:3000/post
+
 Sjældne men kendte fejl:
 
 - Mangel på moduler -> kør "npm install" i flere mapper/stier
