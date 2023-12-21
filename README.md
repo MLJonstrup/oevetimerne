@@ -2,8 +2,8 @@ Denne fil vil indeholde:
 
 1. Forklaring på hvordan man kører vores program på localhost
 2. Videogennemgang af programmet (både som link og fil)
-3. Adndet information
-4. api key
+3. Api key
+4. Andet Information
 
 1:
 
@@ -21,7 +21,7 @@ Sjældne men kendte fejl:
 
 - Mangel på moduler -> kør "npm install" i flere mapper/stier
 - Sqliite modulerne mangler - > npm install sqlite3
-    - Dette kan også ske selvom man kan se modulet i sine node_modules mappe
+- Dette kan også ske selvom man kan se modulet i sine node_modules mappe
 - Bcrypt fejl -> npm install bcrypt
 
 Det kan også være fordelsagtigt at slette modulerne helt og derefter geninstallere dem igen.
@@ -33,9 +33,9 @@ Videoen ligger også under bilag i rapporten.
 (Og beklager for den følsomme mikrofon)
 
 3:
-Dele af css og html filerne af udarbejdet på baggrund af øvelsestimernes tilgang til udsmykning og design af programmet.
+Api Key
+twilio key: '57ae2f8ff3bbb716b1669186bd257edc'
+Kan findes i filen -> user.js , linje 137
 
 4:
-Api Key
-Kan findes i filen user.js linje 137
-twilio key: '57ae2f8ff3bbb716b1669186bd257edc'  
+Dele af css og html filerne af udarbejdet på baggrund af øvelsestimernes tilgang til udsmykning og design af programmet.
