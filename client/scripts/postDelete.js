@@ -1,11 +1,13 @@
 document.addEventListener("DOMContentLoaded", async () => {
+  // Hent DOM-elementer
   const deleteform = document.getElementById("deletePostForm");
 
    try {
+    // Forsøg at hente brugeroplysninger fra serveren med credentials
     const response = await axios.get("/user/details", {
       withCredentials: true,
     });
-
+    // Antager, at serveren responderer med brugeroplysninger
     const user = response.data;
     console.log("User details:", user);
     var userId = user.userId;
@@ -19,6 +21,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   console.log(userId);
 
 
+  // Funktion til at hente brugerens indlæg fra serveren
   async function fetchUserPosts() {
     try {
       const response = await fetch(`/post/userPosts/${userId}`);
@@ -26,7 +29,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const posts = await response.json();
         const postsContainer = document.getElementById("postsContainer");
 
-        // Iterate through each post in the array and create html code for it.
+        // Gennemgå hvert indlæg i arrayet og opret HTML-kode for det
         posts.forEach((post) => {
           const postDiv = document.createElement("div");
           postDiv.id = `post_${post.id}`;
@@ -58,7 +61,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           imgDiv.style.backgroundImage = `url(${post.imgUrl})`;
           postDiv.appendChild(imgDiv);
 
-          // Append the post div to the container
+          // Tilføj post-div til containeren
           postsContainer.appendChild(postDiv);
         });
       } else {
@@ -68,11 +71,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     } catch (error) {
       console.error("An error occurred:", error);
     }
+    // Vedhæfter event listeners til slet-knapperne
     attachDeleteEventListeners();
   }
-
+// Kald funktionen for at hente og vise brugerens indlæg
   fetchUserPosts();
 
+  // Funktion til at vedhæfte event listeners til slet-knapperne
   function attachDeleteEventListeners() {
     const deleteButtons = document.querySelectorAll(".deleteButton");
 
@@ -94,7 +99,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
           if (response.ok) {
             console.log("Post deleted successfully!");
-            // Optionally, update the UI to reflect the deletion
+             // Valgfrit: Opdater UI for at afspejle sletning
             const postDiv = document.getElementById(`post_${postId}`);
             if (postDiv) {
               postDiv.remove();

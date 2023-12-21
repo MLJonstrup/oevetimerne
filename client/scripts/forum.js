@@ -1,5 +1,6 @@
+// Vent, indtil DOM'en er fuldt indlæst, før koden udføres
 document.addEventListener("DOMContentLoaded", async () => {
-
+  // Forsøg at hente brugeroplysninger med en GET-anmodning
   try {
     const response = await axios.get("/user/details", {
       withCredentials: true,
@@ -9,25 +10,28 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.log("User details:", user);
     var userId = user.userId;
   } catch (error) {
+     // Håndter eventuelle fejl ved at logge dem
     if (error.response && error.response.status === 401) {
       console.log("User is not authenticated");
     } else {
       console.error("Error fetching user details:", error.message);
     }
   }
-  console.log(userId);
+  console.log(userId);// Log brugerens ID til konsolle
   
+  // Funktion til at hente brugerens poster og vise dem på siden
   async function fetchUserPosts() {
     try {
+      // Udfør en GET-anmodning for at hente brugerens poster
       const response = await fetch("/post/posts"); 
       if (response.ok) {
-        const posts = await response.json();
-        const postsContainer = document.getElementById("topics");
+        const posts = await response.json();// Gem poster som JSON-data
+        const postsContainer = document.getElementById("topics"); // Hent containeren til poster
 
-        // Iterate through each post in the array
+        // Iterer gennem hver post i arrayet
         posts.forEach((post) => {
 
-          // Create a div element for each post
+          // Opret elementer for titel, dato, indhold og billede
           const postDiv = document.createElement("div");
           postDiv.id = `post_${post.id}`;
           postDiv.classList.add("post");
@@ -49,10 +53,11 @@ document.addEventListener("DOMContentLoaded", async () => {
           imgDiv.style.backgroundImage = `url(${post.imgUrl})`;
           postDiv.appendChild(imgDiv);
 
+          // Tilføj en eventlistener til at vise kommentarer ved klik
           postDiv.addEventListener("click", () =>
             fetchAndDisplayComments(post.id)
           );
-
+          // Tilføj postDiv til postsContainer
           postsContainer.appendChild(postDiv);
         });
       } else {
@@ -62,7 +67,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       console.error("An error occurred:", error);
     }
   }
-
+  // Funktion til at hente og vise kommentarer for en bestemt post
   async function fetchAndDisplayComments(postId) {
     try {
         const response = await fetch(`/comments/post/${postId}`);
@@ -70,15 +75,15 @@ document.addEventListener("DOMContentLoaded", async () => {
         const comments = await response.json();
         console.log(comments);
         const threadContainer = document.getElementById("thread");
-        //const userId =  12;
-        // Clear the existing content in the thread container
+       // Ryd eksisterende indhold i threadContainer
         threadContainer.innerHTML = "";
 
-        // Add the <h2>Thread</h2> element
+        // Tilføj en overskrift til kommentarsektionen
         const threadHeading = document.createElement("h2");
         threadHeading.textContent = "Thread";
         threadContainer.appendChild(threadHeading);
 
+        // Iterer gennem hver kommentar og vis dem
         comments.forEach((comment) => {
           const commentDiv = document.createElement("div");
           commentDiv.textContent = `${comment.username}: ${comment.commentsContent}`;
@@ -86,23 +91,23 @@ document.addEventListener("DOMContentLoaded", async () => {
           threadContainer.appendChild(commentDiv);
         });
 
-        // Create a textarea for entering comments
+        // Opret et tekstområde til at indtaste kommentarer
         const commentText = document.createElement("textarea");
         commentText.id = "commentText";
         commentText.placeholder = "Enter your comment";
         threadContainer.appendChild(commentText);
 
-        // Create a button for adding comments
+        // Opret en knap til at tilføje kommentarer
         const addCommentBtn = document.createElement("button");
         addCommentBtn.id = "addCommentBtn";
         addCommentBtn.textContent = "Add Comment";
         threadContainer.appendChild(addCommentBtn);
 
-        // Event listener for adding comments
+        // Eventlistener til at tilføje kommentarer
         addCommentBtn.addEventListener("click", async () => {
             const commentContent = commentText.value.trim();
 
-            // Check if commentContent is not empty
+            // Tjek om kommentaren ikke er tom
             if (commentContent === "") {
                 alert("Please enter a comment.");
                 return;
@@ -124,7 +129,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 });
 
                 if (response.ok) {
-                    // Append the new comment to the thread
+                    // Tilføj den nye kommentar til tråden
                 }
             } catch (error) {
                 console.error("An error occurred:", error);
@@ -135,6 +140,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       console.error("An error occurred:", error);
     }
   }
-
+// Kald fetchUserPosts for at hente og vise brugerens poster
   fetchUserPosts();
 });

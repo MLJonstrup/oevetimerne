@@ -1,15 +1,18 @@
 document.addEventListener("DOMContentLoaded", async() => {
   const updateForm = document.getElementById("updatePostForm");
 
+  // Forsøg at hente brugeroplysninger fra serveren med Axios
   try {
     const response = await axios.get("/user/details", {
       withCredentials: true,
     });
 
+    // Hvis anmodningen er vellykket, gem brugeroplysningerne
     const user = response.data;
     console.log("User details:", user);
     var userId = user.userId;
   } catch (error) {
+     // Håndter eventuelle fejl, f.eks. manglende autentifikation
     if (error.response && error.response.status === 401) {
       console.log("User is not authenticated");
     } else {
@@ -18,6 +21,7 @@ document.addEventListener("DOMContentLoaded", async() => {
   }
   console.log(userId);
 
+  // Funktion til at hente brugerens indlæg og vise dem på siden
   async function fetchUserPosts() {
     try {
       const response = await fetch(`/post/userPosts/${userId}`);
@@ -25,9 +29,9 @@ document.addEventListener("DOMContentLoaded", async() => {
         const posts = await response.json();
         const postsContainer = document.getElementById("postsContainer");
 
-        // Iterate through each post in the array
+       // Iterer gennem hvert indlæg i arrayet og opret HTML-elementer for dem
         posts.forEach((post) => {
-          // Create a div element for each post
+          // Opretter div for hver post
           const postDiv = document.createElement("div");
           postDiv.id = `post_${post.id}`;
           postDiv.classList.add("post");
@@ -52,7 +56,7 @@ document.addEventListener("DOMContentLoaded", async() => {
           imgDiv.style.backgroundImage = `url(${post.imgUrl})`;
           postDiv.appendChild(imgDiv);
 
-          // Append the post div to the container
+         // Tilføj det oprettede indlæg til containeren
           postsContainer.appendChild(postDiv);
         });
       } else {
@@ -63,12 +67,14 @@ document.addEventListener("DOMContentLoaded", async() => {
     }
   }
 
+  // Kald funktionen til at hente brugerens indlæg
   fetchUserPosts();
 
+  // Tilføj en eventlistener til formularen for at opdatere indlæg
   updateForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
-    // Create a JavaScript object with form data
+    // Opret et JavaScript-objekt med formdata
     const updatePost = {
       title: document.getElementById("updateTitle").value,
       productId: parseInt(document.getElementById("updateProductId").value),
@@ -89,6 +95,7 @@ document.addEventListener("DOMContentLoaded", async() => {
       });
       if (response.ok) {
         console.log("Post updated successfully!");
+        // Efter en vellykket opdatering omdiriger brugeren til indlægssiden
         setTimeout(() => {
           window.location.href = "https://joejuiceforum.social/post";
         }, 3000);

@@ -1,11 +1,13 @@
 document.addEventListener("DOMContentLoaded", async () => {
+  // Hent elementer fra DOM
   const createform = document.getElementById("createPostForm");
   const upload = document.getElementById("upload_widget");
 
   try {
+    // Forsøg at hente brugeroplysninger fra serveren med credentials
     const response = await axios.get('/user/details', { withCredentials: true });
 
-    // Assuming the server responds with user details
+   // Antager, at serveren responderer med brugeroplysninger
     const user = response.data;
     console.log('User details:', user);
     var userId = user.userId;
@@ -18,18 +20,19 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
   console.log(userId);
 
+  // Opret et objekt til at gemme oplysninger om det nye indlæg
   let newPost = {
     title: "",
     productId: "",
     postAuthor: "",
     content: "",
     stars: "",
-    imgUrl: "", // This will be updated after image upload
+    imgUrl: "", // Dette opdateres efter upload af billede
   };
 
-  // Cloudinary widget from: https://cloudinary.com/documentation/javascript_image_and_video_upload
+// Cloudinary-widget fra: https://cloudinary.com/documentation/javascript_image_and_video_upload
   const cloudName = "dnppfpwxu";
-
+// Opret Cloudinary-upload-widget
   let myWidget = cloudinary.createUploadWidget(
     {
       cloudName: cloudName,
@@ -43,6 +46,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   );
 
+   // Tilføj en event listener til upload-knappen
   upload.addEventListener(
     "click",
     function () {
@@ -51,10 +55,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     false
   );
 
-  // Add event listener for form submission
+  // Tilføj event listener til formularindsendelse
   createform.addEventListener("submit", async (event) => {
     event.preventDefault();
 
+    // Indsaml oplysninger fra formularfeltene
     (newPost.title = document.getElementById("title").value),
       (newPost.productId = parseInt(
         document.getElementById("productId").value
@@ -64,6 +69,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       (newPost.stars = parseInt(document.getElementById("stars").value));
 
     try {
+      // Send en POST-anmodning til serveren for at oprette indlægget
       const response = await fetch("/post/createPost", {
         method: "POST",
         headers: {
@@ -72,6 +78,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         body: JSON.stringify(newPost),
       });
       if (response.ok) {
+        // Omdiriger brugeren til indlægssiden og vis en succesmeddelelse
         setTimeout(() => {
           window.location.href = "https://joejuiceforum.social/post";
         }, 0.2);
@@ -80,11 +87,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         );
         console.log("Post created successfully!");
       } else {
+        // Vis en fejlmeddelelse i tilfælde af en fejl i oprettelsen af ​​indlægget
         alert("Error creating post. Please try again.");
         console.error("Error creating post:", response.status);
         return;
       }
     } catch (error) {
+      // Vis en fejlmeddelelse i tilfælde af en fejl
       alert("Error creating post. Please try again.");
       console.error("An error occurred:", error);
     }
