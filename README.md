@@ -34,8 +34,10 @@ Videoen ligger også under bilag i rapporten.
 
 3:
 Api Key
-twilio key: '57ae2f8ff3bbb716b1669186bd257edc'
-Kan findes i filen -> user.js , linje 137
+Twilio key:
+accountSid = 'AC2568c266f5a66782edf7eaa92c6d8ba7'; Kan findes i filen -> user.js , linje 136
+authToken = '57ae2f8ff3bbb716b1669186bd257edc'; Kan findes i filen -> user.js , linje 137
 
 4:
 Dele af css og html filerne af udarbejdet på baggrund af øvelsestimernes tilgang til udsmykning og design af programmet.
+IP adresse til ssh root@167.172.190.108 kode: 2023!CBS
