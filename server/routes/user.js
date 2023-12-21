@@ -86,6 +86,9 @@ router.get('/deleteUser', (req, res) => {
     res.sendFile(path.join(__dirname, "../../client/pages/deleteUser.html"));
 });
 
+
+
+//vi har fået inspiration fra følgenehttps://www.twilio.com/docs/messaging/api?fbclid=IwAR22okBH_VbvUAolbSn9ztTVf3XzAiv4f8nOcxBX148uj_jjYQ-FEii7p2w
 // Opret bruger route handler
 router.post('/createUser', async (req, res) => { 
   const { username, firstname, lastname, phone, email, password, verified } = req.body;
