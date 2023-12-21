@@ -1,30 +1,38 @@
+// Importerer de nødvendige moduler
 const express = require("express");
 const path = require("path");
 const router = express.Router();
 const cookieParser = require("cookie-parser");
 const sqlite3 = require("sqlite3").verbose();
+
+// Opsætter database stien og initialiserer SQLite databasen
 const dbPath = path.resolve(__dirname, "../database.db");
 const db = new sqlite3.Database(dbPath);
 
+// Bruger cookieParser middleware til at håndtere cookies
 router.use(cookieParser());
 
-// Define route handlers
+// Route handler for hjemmesiden
 router.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../../client/pages/posts.html"));
 });
 
+// Route handler for at oprette et nyt opslag
 router.get("/createPost", (req, res) => {
   res.sendFile(path.join(__dirname, "../../client/pages/createPost.html"));
 });
 
+// Route handler for at slette et opslag
 router.get("/deletePost", (req, res) => {
   res.sendFile(path.join(__dirname, "../../client/pages/deletePost.html"));
 });
 
+// Route handler for at opdatere et opslag
 router.get("/updatePost", (req, res) => {
   res.sendFile(path.join(__dirname, "../../client/pages/updatePost.html"));
 });
 
+// Route handler for at hente opslag med en begrænsning på 20, sorteret efter opslagsdato
 router.get("/posts", (req, res) => {
 
   const query = `
@@ -33,7 +41,7 @@ router.get("/posts", (req, res) => {
     ORDER BY postDate DESC
     LIMIT 20;
   `;
-  // Run the query
+   // Kører forespørgslen for at hente opslag
   db.all(query, (err, rows) => {
     if (err) {
       console.error(err.message);
@@ -44,15 +52,16 @@ router.get("/posts", (req, res) => {
   });
 });
 
+// Route handler for at hente opslag af en bestemt bruger
 router.get("/userPosts/:userId", (req, res) => {
   const userId = req.params.userId;
-  // Query to fetch user posts
+
   const query = `
     SELECT * FROM posts
     WHERE postAuthor = ?;
   `;
 
-  // Run the query
+// Kører forespørgslen for at hente brugerens opslag
   db.all(query, [userId], (err, rows) => {
     if (err) {
       console.error(err.message);
@@ -63,12 +72,14 @@ router.get("/userPosts/:userId", (req, res) => {
   });
 });
 
+// Route handler for at oprette et nyt opslag
 router.post("/createPost", async (req, res) => {
   const { title, productId, postAuthor, content, stars, imgUrl } = req.body;
   const query = `
     INSERT INTO posts (title, productId, postAuthor, content, stars, imgUrl)
     VALUES (?, ?, ?, ?, ?, ?);
     `;
+      // Kører forespørgslen for at indsætte et nyt opslag
   db.run(
     query,
     [title, productId, postAuthor, content, stars, imgUrl],
@@ -82,10 +93,11 @@ router.post("/createPost", async (req, res) => {
     }
   );
 });
+// Route handler for at opdatere et eksisterende opslag
 
 router.put("/updatePost", async (req, res) => {
   const { userId, postId, imgUrl, stars, content, productId, title } = req.body;
-  // Query to update a post by ID and author
+  // Query der opdatere et post fra ID og author
   const query = `
         UPDATE posts
         SET
@@ -98,7 +110,7 @@ router.put("/updatePost", async (req, res) => {
         id = ? AND postAuthor = ?;
     `;
 
-  // Run the query
+// Kører forespørgslen for at opdatere et opslag
   db.run(
     query,
     [
@@ -128,11 +140,12 @@ router.put("/updatePost", async (req, res) => {
   );
 });
 
+// Route handler for at slette et opslag
 router.delete("/deletePost", async (req, res) => {
   const { postId, userId } = req.body;
   //const {userId} = req.cookies.userId; FOR LATER WHEN USER COOKIE IS IMPLEMENTED
 
-  //query to run
+  // Kører SQLite3 forespørgslen
   const query = `
     DELETE FROM posts
     WHERE id = ? AND postAuthor = ?;
@@ -155,5 +168,6 @@ router.delete("/deletePost", async (req, res) => {
   });
 });
 
+// Eksporterer routeren
 module.exports = router;
  
