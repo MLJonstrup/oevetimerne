@@ -4,12 +4,23 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require('cookie-parser'); // Importerer cookie-parser
 const helmet = require("helmet"); // Importerer Helmet for sikkerhedsheadere
+const rateLimit = require("express-rate-limit"); // Til beskyttelse mod brute force
 const app = express();
 const postRoute = require("./routes/post.js");
 const commentRoute = require("./routes/comment.js");
 const userRoute = require("./routes/user.js");
 const responseTime = require("response-time");
 const cors = require("cors");
+
+// Middleware til rate limiting
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutter
+  max: 100, // Maksimalt antal anmodninger per IP
+  message: "For mange anmodninger fra denne IP. Prøv igen senere."
+});
+
+// Tilføj rate limiter på alle ruter
+app.use(limiter);
 
 // Starter serveren på port 3000
 app.listen(3000, () => {
@@ -24,14 +35,32 @@ app.use(responseTime()); // Logger svartid for anmodninger
 app.use(cors()); // Aktiverer CORS for at tillade tværs-domæne anmodninger
 
 // Tilføjer Helmet for at implementere sikkerhedsheadere
-app.use(helmet());
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      imgSrc: ["'self'", "data:"],
+      scriptSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'"]
+    }
+  },
+  frameguard: { action: 'sameorigin' },
+  referrerPolicy: { policy: 'strict-origin-when-cross-origin' }
+}));
 
 // Tilføjer ekstra sikkerhedsheadere manuelt, hvis nødvendigt
 app.use((req, res, next) => {
   res.setHeader('Permissions-Policy', 'geolocation=(), microphone=(), camera=()'); // Blokerer brug af kamera/mikrofon
-  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin'); // Kontrollerer referrer-headeren
   next();
 });
+
+// Autentificeringsmiddleware
+const authenticateUser = (req, res, next) => {
+  if (!req.cookies.userId) {
+    return res.status(401).json({ error: "Unauthorized access. Log ind først." });
+  }
+  next();
+};
 
 // Send client files fra server
 app.get("/", (req, res) => {
@@ -47,7 +76,11 @@ app.get("/check-login", (req, res) => {
   }
 });
 
-// Anvender routes fra de forskellige moduler
-app.use("/post", postRoute);
-app.use("/comments", commentRoute);
+// Anvender autentificering på POST og COMMENTS ruter
+app.use("/post", authenticateUser, postRoute);
+app.use("/comments", authenticateUser, commentRoute);
+
+// User routes kræver ikke autentificering (som login og registrering)
 app.use("/user", userRoute);
+
+module.exports = app;
