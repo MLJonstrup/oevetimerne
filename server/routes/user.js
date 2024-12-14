@@ -207,7 +207,7 @@ router.get("/logout", (req, res) => {
   res.clearCookie("userId"); // Antager at et 'userId' cookie blev sat under login
 
   // Omdirigerer brugeren til hjemmesiden
-  res.redirect("https://joejuiceforum.social/");
+  res.redirect("https://joejuiceforum.xyz/");
 });
 
 // Eksporterer routeren for anvendelse i andre dele af applikationen

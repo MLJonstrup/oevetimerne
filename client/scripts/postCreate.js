@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (response.ok) {
         // Omdiriger brugeren til indlægssiden og vis en succesmeddelelse
         setTimeout(() => {
-          window.location.href = "https://joejuiceforum.social/post";
+          window.location.href = "https://joejuiceforum.xyz/post";
         }, 0.2);
         alert(
           "Post created successfully! You will be automatically redirected in a few seconds."

@@ -99,7 +99,7 @@ document.addEventListener("DOMContentLoaded", async() => {
         console.log("Post updated successfully!");
         // Efter en vellykket opdatering omdiriger brugeren til indlægssiden
         setTimeout(() => {
-          window.location.href = "https://joejuiceforum.social/post";
+          window.location.href = "https://joejuiceforum.xyz/post";
         }, 3000);
         alert(
           "Post updated successfully! You will be automatically redirected in a few seconds."

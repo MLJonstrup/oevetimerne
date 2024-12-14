@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Hvis anmodningen er vellykket, viser en besked og omdirigerer brugeren
       if (response.ok) {
         alert("Bruger er oprettet.");
-        window.location.href = "https://joejuiceforum.social/";
+        window.location.href = "https://joejuiceforum.xyz/";
       }
     } catch (error) {
       // Logger fejl, hvis der opstår en under anmodningen
