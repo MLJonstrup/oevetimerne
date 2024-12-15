@@ -1,5 +1,3 @@
-//kode inspiretet fra følgene side https://dev.to/m_josh/build-a-jwt-login-and-logout-system-using-expressjs-nodejs-hd2 og
-//https://blog.logrocket.com/crud-rest-api-node-js-express-postgresql/
 const express = require("express");
 const path = require("path");
 const router = express.Router();
@@ -16,44 +14,39 @@ const transporter = nodemailer.createTransport({
   service: "Gmail",
   auth: {
     user: "joejuicecbs@gmail.com",
-    pass: "vwko ujkw ifla qqnm",
+    pass: "vwko ujkw ifla qqnm", // Husk at bruge en app-adgangskode her
   },
 });
 
-//kode inspiretet fra følgene side https://www.tabnine.com/code/javascript/functions/express/Request/login
 // Login route handler
 router.post("/login", (req, res) => {
   const { username, password } = req.body;
 
   // Henter brugeren fra databasen
-  db.get(
-    "SELECT * FROM users WHERE username = ?",
-    [username],
-    async (err, row) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).send("Internal Server Error");
-      }
+  db.get("SELECT * FROM users WHERE username = ?", [username], async (err, row) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send("Internal Server Error");
+    }
 
-      if (row) {
-        // Sammenligner det indtastede kodeord med det hashede kodeord
-        const match = await bcrypt.compare(password, row.password);
+    if (row) {
+      // Sammenligner det indtastede kodeord med det hashede kodeord
+      const match = await bcrypt.compare(password, row.password);
 
-        if (match) {
-          // Kodeord matcher, fortsæt med login
-          res.cookie("userId", row.id, { httpOnly: true });
-          console.log("Cookie set with userId:", row.id);
-          res.status(200).send("Login successful!");
-        } else {
-          // Kodeord matcher ikke
-          res.status(401).send("Invalid username or password");
-        }
+      if (match) {
+        // Kodeord matcher, fortsæt med login
+        res.cookie("userId", row.id, { httpOnly: true });
+        console.log("Cookie set with userId:", row.id);
+        res.status(200).send("Login successful!");
       } else {
-        // Bruger ikke fundet
+        // Kodeord matcher ikke
         res.status(401).send("Invalid username or password");
       }
+    } else {
+      // Bruger ikke fundet
+      res.status(401).send("Invalid username or password");
     }
-  );
+  });
 });
 
 // Detalje route handler
@@ -88,70 +81,71 @@ router.get("/deleteUser", (req, res) => {
   res.sendFile(path.join(__dirname, "../../client/pages/deleteUser.html"));
 });
 
-//vi har fået inspiration fra følgenehttps://www.twilio.com/docs/messaging/api?fbclid=IwAR22okBH_VbvUAolbSn9ztTVf3XzAiv4f8nOcxBX148uj_jjYQ-FEii7p2w
 // Opret bruger route handler
 router.post("/createUser", async (req, res) => {
-  const { username, firstname, lastname, phone, email, password, verified } =
-    req.body;
+  const { username, firstname, lastname, phone, email, password, verified } = req.body;
 
   try {
     // Hasher kodeordet
     const hashedPassword = await bcrypt.hash(password, saltRounds);
+
     // SQL-forespørgsel til indsættelse af den nye bruger i databasen
     const query = `
       INSERT INTO users (username, firstname, lastname, phone, email, password, verified)
       VALUES (?, ?, ?, ?, ?, ?, ?);
-      `;
+    `;
 
-    // Kører forespørgslen og indsætter brugerdata
     db.run(
       query,
-      [username, firstname, lastname, phone, email, hashedPassword, verified], // Use hashedPassword instead of password
+      [username, firstname, lastname, phone, email, hashedPassword, verified],
       function (err) {
         if (err) {
-          console.error(err.message);
-          res.status(500).json({ error: "Error creating user" });
-        } else {
-          console.log(`User created successfully.`);
-          res.status(200).json({ message: "User created successfully!" });
+          console.error("Database error:", err.message);
+          return res.status(500).json({ error: "Error creating user in the database" });
+        }
 
-          // Opsætter og sender en bekræftelses-email
-          const mailOptions = {
-            from: "joejuicecbs@gmail.com",
-            to: email,
-            subject: "User Registration Confirmation",
-            text: `Hello ${username},\n\nThank you for registering on our platform! Your account has been created successfully.`,
-          };
+        console.log(`User created successfully with ID: ${this.lastID}`);
 
-          transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-              console.error(error);
-              return res.status(500).send("Error sending confirmation email");
-            }
+        // Opsætter og sender en bekræftelses-email
+        const mailOptions = {
+          from: "joejuicecbs@gmail.com",
+          to: email,
+          subject: "User Registration Confirmation",
+          text: `Hello ${username},\n\nThank you for registering on our platform! Your account has been created successfully.`,
+        };
 
-            console.log("Email sent: " + info.response);
-          });
+        transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+            console.error("Nodemailer error:", error.message);
+            return res.status(500).json({ error: "Error sending confirmation email" });
+          }
+
+          console.log("Email sent successfully: " + info.response);
 
           // Sender en bekræftelses-SMS via Twilio
-          const accountSid = "AC6246404e891b0ec4315f48f8b1f5722f";
-          const authToken = "e62028a0e62245d4b570e4b62a6c1aff";
+          const accountSid = "your_account_sid"; // Indsæt din Twilio Account SID
+          const authToken = "your_auth_token"; // Indsæt din Twilio Auth Token
           const client = require("twilio")(accountSid, authToken);
-          console.log(phone);
+
           client.messages
             .create({
               body: `Hello ${username},\n\nThank you for registering on our platform! Your account has been created successfully.`,
-              from: "+12184329510",
+              from: "+14692084452", // Verificeret Twilio-nummer
               to: phone,
             })
-            .then((message) => console.log(message.sid))
-            .finally(() => {
-              console.log("Message sent");
+            .then((message) => {
+              console.log("Twilio message sent, SID:", message.sid);
+              res.status(200).json({ message: "User created successfully!" });
+            })
+            .catch((err) => {
+              console.error("Twilio error:", err.message);
+              res.status(500).json({ error: "Error sending SMS confirmation" });
             });
-        }
+        });
       }
     );
   } catch (err) {
-    console.error(err.message);
+    console.error("Hashing error:", err.message);
     res.status(500).json({ error: "Error hashing password" });
   }
 });
@@ -160,48 +154,44 @@ router.post("/createUser", async (req, res) => {
 router.post("/deleteUser", (req, res) => {
   const { username, password } = req.body;
 
-  // Forespørger databasen for at se, om brugernavn og kodeord matcher
-  db.get(
-    "SELECT * FROM users WHERE username = ? AND password = ?",
-    [username, password],
-    (err, row) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).send("Internal Server Error");
-      }
+  db.get("SELECT * FROM users WHERE username = ?", [username], async (err, row) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send("Internal Server Error");
+    }
 
-      if (row) {
-        // Bruger fundet, slet brugeren fra databasen
+    if (row) {
+      const match = await bcrypt.compare(password, row.password);
+      if (match) {
         db.run(
-          "DELETE FROM users WHERE username = ? AND password = ?",
-          [username, password],
+          "DELETE FROM users WHERE username = ?",
+          [username],
           function (err) {
             if (err) {
               console.error(err);
               return res.status(500).send("Internal Server Error");
             }
 
-            // Tjekker, om der er påvirkede rækker (bruger slettet)
             if (this.changes > 0) {
               console.log("Bruger slettet");
               return res.status(200).send("User deleted successfully.");
             } else {
-              // Ingen påvirkede rækker, bruger ikke fundet eller forkert kodeord
-              return res.status(401).send("No rows affected");
+              return res.status(404).send("No user deleted");
             }
           }
         );
       } else {
-        // Bruger ikke fundet eller forkert kodeord
-        res.status(401).send("Invalid username or password");
+        return res.status(401).send("Invalid username or password");
       }
+    } else {
+      res.status(404).send("User not found");
     }
-  );
+  });
 });
 
 // Route handler for logud
 router.get("/logout", (req, res) => {
-  console.log("Logout route called"); // Tilføjet for fejlsøgning
+  console.log("Logout route called");
 
   // Rydder brugerens session eller cookie (hvis cookies anvendes)
   res.clearCookie("userId"); // Antager at et 'userId' cookie blev sat under login
