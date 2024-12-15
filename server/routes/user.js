@@ -133,8 +133,8 @@ router.post("/createUser", async (req, res) => {
           });
 
           // Sender en bekræftelses-SMS via Twilio
-          const accountSid = "AC6246404e891b0ec4315f48f8b1f5722f";
-          const authToken = "e62028a0e62245d4b570e4b62a6c1aff";
+          const accountSid = "";
+          const authToken = "";
           const client = require("twilio")(accountSid, authToken);
           console.log(phone);
           client.messages
