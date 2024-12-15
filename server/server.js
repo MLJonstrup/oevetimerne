@@ -40,13 +40,15 @@ app.use(helmet({
     directives: {
       defaultSrc: ["'self'"],
       imgSrc: ["'self'", "data:"],
-      scriptSrc: ["'self'", "'unsafe-inline'"], // Tillader inline-scripts
+      scriptSrc: ["'self'"],
+      scriptSrcAttr: ["'unsafe-inline'"], // Tillader inline event handlers
       styleSrc: ["'self'", "'unsafe-inline'"]
     }
   },
   frameguard: { action: 'sameorigin' },
   referrerPolicy: { policy: 'strict-origin-when-cross-origin' }
 }));
+
 
 
 
