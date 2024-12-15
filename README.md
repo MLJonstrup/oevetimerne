@@ -15,7 +15,7 @@ Denne fil vil indeholde:
 
 OBS! Hver gang der bliver trykket på en knap, hvor man bliver redirected til en anden side, så bliver man sendt til domænet som kører på Digital Ocean.
 Så skal man derfor selv ændre tilbage til localhost.
-Eksempel: Der bliver trykket på logind knappen, så bliver man sendt fra localhost:3000 til https://joejuiceforum.social/post. Herfra skal man så ændre url'et til localhost:3000/post
+Eksempel: Der bliver trykket på logind knappen, så bliver man sendt fra localhost:3000 til https://joejuiceforum.xyz/post. Herfra skal man så ændre url'et til localhost:3000/post
 
 Sjældne men kendte fejl:
 
@@ -35,9 +35,10 @@ Videoen ligger også under bilag i rapporten.
 3:
 Api Key
 Twilio key:
-accountSid = 'AC2568c266f5a66782edf7eaa92c6d8ba7'; Kan findes i filen -> user.js , linje 136
-authToken = '57ae2f8ff3bbb716b1669186bd257edc'; Kan findes i filen -> user.js , linje 137
+accountSid = 'AC6246404e891b0ec4315f48f8b1f5722f'; Kan findes i filen -> user.js , linje 136
+authToken = 'e62028a0e62245d4b570e4b62a6c1aff'; Kan findes i filen -> user.js , linje 137
+
 
 4:
 Dele af css og html filerne af udarbejdet på baggrund af øvelsestimernes tilgang til udsmykning og design af programmet.
-IP adresse til ssh root@167.172.190.108 kode: 2023!CBS
+IP adresse til ssh root@206.189.109.70 kode: 7777
