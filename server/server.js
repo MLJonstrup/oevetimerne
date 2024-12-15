@@ -41,12 +41,14 @@ app.use(
       directives: {
         defaultSrc: ["'self'"],
         imgSrc: ["'self'", "data:"],
-        scriptSrc: ["'self'", "'unsafe-inline'"], // Include unsafe-inline if necessary
+        scriptSrc: ["'self'", "'unsafe-inline'"], // Allow inline scripts if needed
+        scriptSrcAttr: ["'unsafe-inline'"], // Specifically allows inline event handlers
         styleSrc: ["'self'", "'unsafe-inline'"],
       },
     },
   })
 );
+
 
 
 
