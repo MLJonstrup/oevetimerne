@@ -40,7 +40,7 @@ app.use(helmet({
     directives: {
       defaultSrc: ["'self'"],
       imgSrc: ["'self'", "data:"],
-      scriptSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-hashes'"],
       styleSrc: ["'self'", "'unsafe-inline'"]
     }
   },
