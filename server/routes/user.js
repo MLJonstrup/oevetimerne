@@ -123,14 +123,14 @@ router.post("/createUser", async (req, res) => {
           console.log("Email sent successfully: " + info.response);
 
           // Sender en bekræftelses-SMS via Twilio
-          const accountSid = "AC2568c266f5a66782edf7eaa92c6d8ba7"; // Indsæt din Twilio Account SID
-          const authToken = "57ae2f8ff3bbb716b1669186bd257edc"; // Indsæt din Twilio Auth Token
+          const accountSid = "AC6246404e891b0ec4315f48f8b1f5722f"; // Indsæt din Twilio Account SID
+          const authToken = "e62028a0e62245d4b570e4b62a6c1aff"; // Indsæt din Twilio Auth Token
           const client = require("twilio")(accountSid, authToken);
 
           client.messages
             .create({
               body: `Hello ${username},\n\nThank you for registering on our platform! Your account has been created successfully.`,
-              from: "+14692084452", // Verificeret Twilio-nummer
+              from: "+12184329510", // Verificeret Twilio-nummer
               to: phone,
             })
             .then((message) => {
