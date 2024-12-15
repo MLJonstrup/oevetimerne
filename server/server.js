@@ -38,21 +38,15 @@ app.use(cors()); // Aktiverer CORS for at tillade tværs-domæne anmodninger
 app.use(
   helmet({
     contentSecurityPolicy: {
-      useDefaults: true,
       directives: {
         defaultSrc: ["'self'"],
         imgSrc: ["'self'", "data:"],
-        scriptSrc: ["'self'"],
-        scriptSrcAttr: ["'unsafe-inline'"], // Explicitly allow inline event handlers
+        scriptSrc: ["'self'", "'unsafe-inline'"], // Include unsafe-inline if necessary
         styleSrc: ["'self'", "'unsafe-inline'"],
-        // Optionally add 'unsafe-hashes' to allow hashes for inline handlers
-        unsafeHashes: true
       },
     },
   })
 );
-
-
 
 
 
