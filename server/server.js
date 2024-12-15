@@ -40,14 +40,14 @@ app.use(helmet({
     directives: {
       defaultSrc: ["'self'"],
       imgSrc: ["'self'", "data:"],
-      scriptSrc: ["'self'"],
-      scriptSrcAttr: ["'self'", "'unsafe-inline'"], // Tilføj dette linje
+      scriptSrc: ["'self'", "'unsafe-inline'"], // Tillader inline-scripts
       styleSrc: ["'self'", "'unsafe-inline'"]
     }
   },
   frameguard: { action: 'sameorigin' },
   referrerPolicy: { policy: 'strict-origin-when-cross-origin' }
 }));
+
 
 
 // Autentificeringsmiddleware
