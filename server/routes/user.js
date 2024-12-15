@@ -140,7 +140,7 @@ router.post("/createUser", async (req, res) => {
           client.messages
             .create({
               body: `Hello ${username},\n\nThank you for registering on our platform! Your account has been created successfully.`,
-              from: "+12184329510",
+              from: "+14692084452",
               to: phone,
             })
             .then((message) => console.log(message.sid))
