@@ -133,14 +133,14 @@ router.post("/createUser", async (req, res) => {
           });
 
           // Sender en bekræftelses-SMS via Twilio
-          const accountSid = "AC2568c266f5a66782edf7eaa92c6d8ba7";
-          const authToken = "57ae2f8ff3bbb716b1669186bd257edc";
+          const accountSid = "AC6246404e891b0ec4315f48f8b1f5722f";
+          const authToken = "e62028a0e62245d4b570e4b62a6c1aff";
           const client = require("twilio")(accountSid, authToken);
           console.log(phone);
           client.messages
             .create({
               body: `Hello ${username},\n\nThank you for registering on our platform! Your account has been created successfully.`,
-              from: "+14692084452",
+              from: "+12184329510",
               to: phone,
             })
             .then((message) => console.log(message.sid))
@@ -207,7 +207,7 @@ router.get("/logout", (req, res) => {
   res.clearCookie("userId"); // Antager at et 'userId' cookie blev sat under login
 
   // Omdirigerer brugeren til hjemmesiden
-  res.redirect("https://joejuiceforum.xyz/");
+  res.redirect("https://joejuiceforum.xyz");
 });
 
 // Eksporterer routeren for anvendelse i andre dele af applikationen
