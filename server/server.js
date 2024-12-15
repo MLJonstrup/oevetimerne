@@ -40,7 +40,8 @@ app.use(helmet({
     directives: {
       defaultSrc: ["'self'"],
       imgSrc: ["'self'", "data:"],
-      scriptSrc: ["'self'", "'unsafe-inline'"],
+      scriptSrc: ["'self'"],
+      scriptSrcAttr: ["'self'", "'unsafe-inline'"], // Tilføj dette linje
       styleSrc: ["'self'", "'unsafe-inline'"]
     }
   },
