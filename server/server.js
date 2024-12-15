@@ -40,7 +40,7 @@ app.use(helmet({
     directives: {
       defaultSrc: ["'self'"],
       imgSrc: ["'self'", "data:"],
-      scriptSrc: ["'self'", "'unsafe-hashes'"],
+      scriptSrc: ["'self'", "'unsafe-inline'"],
       styleSrc: ["'self'", "'unsafe-inline'"]
     }
   },
@@ -48,11 +48,6 @@ app.use(helmet({
   referrerPolicy: { policy: 'strict-origin-when-cross-origin' }
 }));
 
-// Tilføjer ekstra sikkerhedsheadere manuelt, hvis nødvendigt
-app.use((req, res, next) => {
-  res.setHeader('Permissions-Policy', 'geolocation=(), microphone=(), camera=()'); // Blokerer brug af kamera/mikrofon
-  next();
-});
 
 // Autentificeringsmiddleware
 const authenticateUser = (req, res, next) => {
