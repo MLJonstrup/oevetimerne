@@ -35,19 +35,23 @@ app.use(responseTime()); // Logger svartid for anmodninger
 app.use(cors()); // Aktiverer CORS for at tillade tværs-domæne anmodninger
 
 // Tilføjer Helmet for at implementere sikkerhedsheadere
-app.use(helmet({
-  contentSecurityPolicy: {
-    directives: {
-      defaultSrc: ["'self'"],
-      imgSrc: ["'self'", "data:"],
-      scriptSrc: ["'self'"],
-      scriptSrcAttr: ["'unsafe-inline'"], // Tillader inline event handlers
-      styleSrc: ["'self'", "'unsafe-inline'"]
-    }
-  },
-  frameguard: { action: 'sameorigin' },
-  referrerPolicy: { policy: 'strict-origin-when-cross-origin' }
-}));
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      useDefaults: true,
+      directives: {
+        defaultSrc: ["'self'"],
+        imgSrc: ["'self'", "data:"],
+        scriptSrc: ["'self'"],
+        scriptSrcAttr: ["'unsafe-inline'"], // Explicitly allow inline event handlers
+        styleSrc: ["'self'", "'unsafe-inline'"],
+        // Optionally add 'unsafe-hashes' to allow hashes for inline handlers
+        unsafeHashes: true
+      },
+    },
+  })
+);
+
 
 
 
