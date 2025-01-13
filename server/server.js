@@ -34,21 +34,6 @@ app.use(express.static(path.join(__dirname, "../client"))); // Serverer statiske
 app.use(responseTime()); // Logger svartid for anmodninger
 app.use(cors()); // Aktiverer CORS for at tillade tværs-domæne anmodninger
 
-// Tilføjer Helmet for at implementere sikkerhedsheadere
-app.use(
-  helmet({
-    contentSecurityPolicy: {
-      directives: {
-        defaultSrc: ["'self'"],
-        imgSrc: ["'self'", "data:"],
-        scriptSrc: ["'self'", "'unsafe-inline'"], // Allow inline scripts if needed
-        scriptSrcAttr: ["'unsafe-inline'"], // Specifically allows inline event handlers
-        styleSrc: ["'self'", "'unsafe-inline'"],
-      },
-    },
-  })
-);
-
 
 
 
